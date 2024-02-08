@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Link } from "react-router-dom";
+import logo from '../images/logo.png'
 const Search = lazy(() => import("./Search"));
 
 const Header = () => {
@@ -9,20 +10,30 @@ const Header = () => {
         <div className="row g-3">
           <div className="col-md-3 text-center">
             <Link to="/">
-              <img alt="logo" src="../../images/logo.webp" />
+              <img alt="logo" src={logo} style={{ width: "200px" }} />
             </Link>
           </div>
           <div className="col-md-5">
             <Search />
           </div>
           <div className="col-md-4">
-            <div className="position-relative d-inline me-3">
+            {/* <div className="position-relative d-inline me-3">
               <Link to="/cart" className="btn btn-primary">
                 <i className="bi bi-cart3"></i>
                 <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-circle">
                   2
                 </div>
               </Link>
+            </div> */}
+            <div className="position-relative d-inline me-3">
+              <button type="button" className="btn btn-primary me-3">
+                Get Started
+              </button>
+            </div>
+            <div className="position-relative d-inline me-3">
+              <a href="/download" className="btn btn-success" download>
+                Download
+              </a>
             </div>
             <div className="btn-group">
               <button

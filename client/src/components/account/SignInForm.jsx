@@ -69,7 +69,7 @@ const SignInForm = (props) => {
       </Link>
       <div className="clearfix"></div>
       <hr></hr>
-      <div className="row">
+      {/* <div className="row">
         <div className="col- text-center">
           <p className="text-muted small">Or you can join with</p>
         </div>
@@ -84,7 +84,7 @@ const SignInForm = (props) => {
             <i className="bi bi-google mx-1" />
           </Link>
         </div>
-      </div>
+      </div> */}
     </form>
   );
 };

@@ -1,11 +1,24 @@
+import  axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const TopMenu = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/catalogue/categories/')
+      .then(response => {
+        setCategories(response.data.categories);
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-0">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          E-Commerce
+          CatalogCraft- Catalog Digitization with Ease
         </Link>
         <button
           className="navbar-toggler"
@@ -28,9 +41,9 @@ const TopMenu = () => {
                 aria-expanded="false"
                 data-bs-toggle="dropdown"
               >
-                All Pages
+                All Catalogues
               </button>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              {/* <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <Link className="dropdown-item" to="/account/signin">
                     Sign In
@@ -77,19 +90,26 @@ const TopMenu = () => {
                     500 Internal Server Error
                   </Link>
                 </li>
+              </ul> */}
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                {categories.map((category, index) => (
+                  <li key={index}>
+                    <p className="dropdown-item">{category}</p>
+                  </li>
+                ))}
               </ul>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/category">
-                Fashion
+                Standardized Catalogues
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/category">
-                Supermarket
+                Non Standardized Catalogues
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/category">
                 Electronics
               </Link>
@@ -113,7 +133,7 @@ const TopMenu = () => {
               <Link className="nav-link" to="/documentation">
                 Documentation
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

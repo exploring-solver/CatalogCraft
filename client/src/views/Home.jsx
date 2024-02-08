@@ -1,6 +1,8 @@
 import React, { lazy, Component } from "react";
-import { Link } from "react-router-dom";
 import { data } from "../data";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { ReactComponent as IconLaptop } from "bootstrap-icons/icons/laptop.svg";
 import { ReactComponent as IconHeadset } from "bootstrap-icons/icons/headset.svg";
 import { ReactComponent as IconPhone } from "bootstrap-icons/icons/phone.svg";
@@ -21,6 +23,21 @@ const CardDealsOfTheDay = lazy(() =>
 );
 
 class HomeView extends Component {
+  state = {
+    catalogueData: []
+  };
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:8000/catalogue/get-all")
+      .then((response) => {
+        this.setState({ catalogueData: response.data });
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.error("Error fetching catalogue data:", error);
+      });
+  }
   components = {
     IconLaptop: IconLaptop,
     IconHeadset: IconHeadset,
@@ -33,6 +50,7 @@ class HomeView extends Component {
   };
 
   render() {
+    const { catalogueData } = this.state;
     const iconProducts = data.iconProducts;
     const rows = [...Array(Math.ceil(iconProducts.length / 4))];
     // chunk the products into the array of rows
@@ -79,7 +97,7 @@ class HomeView extends Component {
             </div>
           </div>
         </div>
-        <div className="container-fluid bg-light mb-3">
+        {/* <div className="container-fluid bg-light mb-3">
           <div className="row">
             <div className="col-md-12">
               <CardDealsOfTheDay
@@ -93,9 +111,9 @@ class HomeView extends Component {
               </CardDealsOfTheDay>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="bg-info bg-gradient p-3 text-center mb-3">
+        {/* <div className="bg-info bg-gradient p-3 text-center mb-3">
           <h4 className="m-0">Explore Fashion Collection</h4>
         </div>
         <div className="container">
@@ -140,6 +158,30 @@ class HomeView extends Component {
                 <div className="text-center h6">Footwear</div>
               </Link>
             </div>
+          </div>
+        </div> */}
+        <div className="container mt-3">
+          <h2>Catalogue</h2>
+          <div className="row">
+            {catalogueData.map((product) => (
+              <div key={product.id} className="col-md-4 mb-3">
+                <div className="card">
+                  <img
+                    src={product.product_image_1}
+                    className="card-img-top"
+                    alt={product.product_name}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.product_name}</h5>
+                    <p className="card-text">MRP: ${product.mrp}</p>
+                    <p className="card-text">
+                      Selling Price: ${product.selling_prize}
+                    </p>
+                    <p className="card-text">Category: {product.category}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </React.Fragment>
