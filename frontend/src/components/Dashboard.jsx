@@ -32,17 +32,17 @@ function Dashboard() {
             ) : (
                 <>
                     <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                        <h2 className="text-xl font-bold mb-2">User Details</h2>
+                        <h2 className="text-xl font-bold mb-2">Logged in as</h2>
                         <p><strong>Email:</strong> {user.email}</p>
                         <p><strong>Name:</strong> {user.name}</p>
                         <p><strong>Number:</strong> {user.number}</p>
-                        <p><strong>Role:</strong> {user.role}</p>
+                        <p><strong>Role:</strong> {user.role} NP</p>
                     </div>
                     <div className="bg-gray-100 p-4 rounded-lg">
                         <h2 className="text-xl font-bold mb-2">Catalogs</h2>
                         {/* Render catalogs here */}
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            <Link to={'/add-catalog'}>
+                            <Link to={'/store-select'}>
                                 Add Catalog
                             </Link>
                         </button>

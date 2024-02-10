@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CatalogueInput from './CatalogueInput';
 import axios from 'axios';
+import CatalogImageInput from './CatalogImageInput';
 
 function AddCatalogue() {
   const [formData, setFormData] = useState({
@@ -13,8 +14,13 @@ function AddCatalogue() {
     unit: '',
     quantity: '',
     standardized: '',
-    category: '', // Update to match the new fields
+    category: '', 
     mapped_to_master: '',
+    product_image_1: null,
+    product_image_2: null,
+    product_image_3: null,
+    product_image_4: null,
+    product_image_5: null,
   });
   const [errorMessages, setErrorMessages] = useState({});
 
@@ -24,20 +30,56 @@ function AddCatalogue() {
       [e.target.name]: e.target.value
     });
   };
+  
+  const handleImageChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.files[0]
+    });
+  };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.post('http://localhost:8000/catalogue/create/', formData, {
+      const formDataWithImages = new FormData();
+      // Append image files to the formData object
+      for (let i = 1; i <= 5; i++) {
+        formDataWithImages.append(`product_image_${i}`, formData[`product_image_${i}`]);
+      }
+      // Append other form data fields
+      for (const key in formData) {
+        if (key !== 'product_image_1' && key !== 'product_image_2' && key !== 'product_image_3' && key !== 'product_image_4' && key !== 'product_image_5') {
+          formDataWithImages.append(key, formData[key]);
+        }
+      }
+      const response = await axios.post('http://localhost:8000/catalogue/create/', formDataWithImages, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'multipart/form-data'
         }
       });
       console.log(response.data);
-      // Handle successful catalogue creation, such as redirecting to another page
+      alert('Catalogue Created Successfully!!');
+      setFormData({ // Reset form fields to their initial state
+        product_name: '',
+        mrp: '',
+        selling_prize: '',
+        buying_prize: '',
+        hsn_code: '',
+        gst_percentage: '',
+        unit: '',
+        quantity: '',
+        standardized: '',
+        category: '', 
+        mapped_to_master: '',
+        product_image_1: null,
+        product_image_2: null,
+        product_image_3: null,
+        product_image_4: null,
+        product_image_5: null,
+      });
+      setErrorMessages({});
     } catch (error) {
       console.error('Catalogue creation error:', error);
       if (error.response && error.response.data) {
@@ -49,6 +91,7 @@ function AddCatalogue() {
   return (
     <div className="max-w-md mx-auto mt-8">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className='text-2xl font-mono my-5'>Catalogue Creation</h1>
         {/* Input fields for each catalogue detail */}
         <CatalogueInput
           label="Product Name"
@@ -148,6 +191,41 @@ function AddCatalogue() {
           </select>
           {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.mapped_to_master}</p>}
         </div>
+        <CatalogImageInput
+          label="Product Image 1"
+          name="product_image_1"
+          type="file"
+          onChange={handleImageChange}
+          errorMessage={errorMessages.product_image_1}
+        />
+        <CatalogImageInput
+          label="Product Image 2"
+          name="product_image_2"
+          type="file"
+          onChange={handleImageChange}
+          errorMessage={errorMessages.product_image_2}
+        />
+        <CatalogImageInput
+          label="Product Image 3"
+          name="product_image_3"
+          type="file"
+          onChange={handleImageChange}
+          errorMessage={errorMessages.product_image_3}
+        />
+        <CatalogImageInput
+          label="Product Image 4"
+          name="product_image_4"
+          type="file"
+          onChange={handleImageChange}
+          errorMessage={errorMessages.product_image_4}
+        />
+        <CatalogImageInput
+          label="Product Image 5"
+          name="product_image_5"
+          type="file"
+          onChange={handleImageChange}
+          errorMessage={errorMessages.product_image_5}
+        />
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Add Catalogue

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 
-function CatalogList() {
+function Catalogs() {
   const [catalogsByCategory, setCatalogsByCategory] = useState({});
   const url = "http://panel.mait.ac.in:8012";
 
@@ -56,4 +56,4 @@ function CatalogList() {
   );
 }
 
-export default CatalogList;
+export default Catalogs;
