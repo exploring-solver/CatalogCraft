@@ -33,7 +33,7 @@ function CatalogList() {
 
   return (
     <div className="max-w-6xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8">Catalogs by Category</h1>
+      <h1 className="text-3xl font-bold mb-8 text-gray-700">Catalogues by Category</h1>
       {Object.entries(catalogsByCategory).map(([category, catalogs]) => (
         <div key={category} className="mb-8 shadow px-5 py-5 rounded">
           <h2 className="text-xl font-bold mb-4">{category}</h2>
@@ -42,7 +42,7 @@ function CatalogList() {
             {catalogs.map(catalog => (
               <Link key={catalog.id} to={`/catalogue/${catalog.id}`} className="block">
                 <div className="bg-white rounded-lg shadow-md p-4 cursor-pointer">
-                  <img src={`${url}${catalog.product_image_1}`} alt={catalog.product_name} className="w-full h-32 object-cover mb-4" />
+                  <img src={`${url}${catalog.product_image_1}`} alt={catalog.product_name} className="w-fit h-32 object-cover mb-4" />
                   <h3 className="text-lg font-bold mb-2">{catalog.product_name}</h3>
                   <p className="text-sm">MRP: {catalog.mrp}</p>
                   <p className="text-sm">Selling Price: {catalog.selling_prize}</p>

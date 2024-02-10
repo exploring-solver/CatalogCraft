@@ -12,7 +12,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/auth/register/', {
+      const response = await axios.post('http://panel.mait.ac.in:8012/auth/register/', {
         email,
         password,
         name,

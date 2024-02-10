@@ -53,7 +53,7 @@ function AddCatalogue() {
           formDataWithImages.append(key, formData[key]);
         }
       }
-      const response = await axios.post('http://localhost:8000/catalogue/create/', formDataWithImages, {
+      const response = await axios.post('http://panel.mait.ac.in:8012/catalogue/create/', formDataWithImages, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data'

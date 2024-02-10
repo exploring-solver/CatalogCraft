@@ -10,7 +10,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/auth/login/', {
+      const response = await axios.post('http://panel.mait.ac.in:8012/auth/login/', {
         email,
         password,
       });

@@ -8,7 +8,7 @@ function Dashboard() {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('http://localhost:8000/auth/user-details/', {
+        axios.get('http://panel.mait.ac.in:8012/auth/user-details/', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Add the token to the 'Authorization' header
                 'Content-Type': 'application/json', // Adjust headers as needed

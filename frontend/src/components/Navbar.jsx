@@ -12,7 +12,7 @@ function Navbar() {
             <a href="/" className="text-white hover:text-gray-300">Home</a>
           </li>
           <li className="ml-4">
-            <a href="/catalogs" className="text-white hover:text-gray-300">Catalogs</a>
+            <a href="/catalogs" className="text-white hover:text-gray-300">Catalogues</a>
           </li>
           <li className="ml-4">
             <a href="/login" className="text-white hover:text-gray-300">Login</a>
