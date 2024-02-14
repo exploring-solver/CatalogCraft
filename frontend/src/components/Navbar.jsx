@@ -20,6 +20,9 @@ function Navbar() {
           <li className="ml-4">
             <a href="/signup" className="text-white hover:text-gray-300">Sign Up</a>
           </li>
+          <li className="ml-4">
+            <a href="http://panel.mait.ac.in:8012/media/images/CatalogCraft.apk" className="text-white hover:text-gray-300">Download App</a>
+          </li>
         </ul>
       </div>
     </nav>

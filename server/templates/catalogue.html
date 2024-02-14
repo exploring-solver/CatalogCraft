@@ -1,0 +1,75 @@
+<!-- templates/catalogue_create_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Catalogue</title>
+</head>
+<body>
+    <h2>Create Catalogue</h2>
+    <form method="post" enctype="multipart/form-data" action="/catalogue/create/">
+        {% csrf_token %}
+
+        <!-- Seller Information -->
+        <label for="seller">Seller ID:</label>
+        <input type="number" name="seller" required><br>
+
+        <!-- Product Information -->
+        <label for="product_name">Product Name:</label>
+        <input type="text" name="product_name" required><br>
+
+        <label for="mrp">MRP:</label>
+        <input type="text" name="mrp" required><br>
+
+        <label for="selling_prize">Selling Prize:</label>
+        <input type="text" name="selling_prize" required><br>
+
+        <label for="buying_prize">Buying Prize:</label>
+        <input type="text" name="buying_prize" required><br>
+
+        <label for="hsn_code">HSN Code:</label>
+        <input type="text" name="hsn_code" required><br>
+
+        <label for="gst_percentage">GST Percentage:</label>
+        <input type="text" name="gst_percentage" required><br>
+
+        <label for="unit">Unit:</label>
+        <input type="text" name="unit" required><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="text" name="quantity" required><br>
+
+        <!-- Product Images -->
+        <label for="product_image_1">Product Image 1:</label>
+        <input type="file" name="product_image_1" accept="image/*"><br>
+
+        <label for="product_image_2">Product Image 2:</label>
+        <input type="file" name="product_image_2" accept="image/*"><br>
+
+        <label for="product_image_3">Product Image 3:</label>
+        <input type="file" name="product_image_3" accept="image/*"><br>
+
+        <label for="product_image_4">Product Image 4:</label>
+        <input type="file" name="product_image_4" accept="image/*"><br>
+
+        <label for="product_image_5">Product Image 5:</label>
+        <input type="file" name="product_image_5" accept="image/*"><br>
+
+        <!-- Standardized Checkbox -->
+        <label for="standardized">Standardized:</label>
+        <input type="checkbox" name="standardized"><br>
+
+        <!-- Category Information -->
+        <label for="category">Category:</label>
+        <input type="text" name="category" required><br>
+
+        <!-- Mapped to Master Checkbox -->
+        <label for="mapped_to_master">Mapped to Master:</label>
+        <input type="checkbox" name="mapped_to_master"><br>
+
+        <button type="submit">Create Catalogue</button>
+    </form>
+</body>
+</html>
