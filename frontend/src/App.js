@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { NavbarWithMegaMenu } from './components/Navbar';
 import Home from './components/Home';
 import Footer from './components/Footer';
 import Signup from './components/Singup';
@@ -14,7 +14,7 @@ import Catalogs from './components/Catalogs';
 function App() {
   return (
     <Router>
-        <Navbar />
+        <NavbarWithMegaMenu />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup/>} />
