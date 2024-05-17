@@ -34,6 +34,12 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
         name={name}
         onChange={handleImageChange}
       />
+      {imagePreview && (
+        <div className="mt-4">
+          <img src={imagePreview} alt="Uploaded Preview" className="max-w-[100px] h-auto rounded-md shadow-md" />
+        </div>
+      )}
+      <br />
       <Button variant="gradient" className="flex items-center gap-3" onClick={handleButtonClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,11 +57,7 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
         </svg>
         Upload Image
       </Button>
-      {imagePreview && (
-        <div className="mt-4">
-          <img src={imagePreview} alt="Uploaded Preview" className="max-w-[100px] h-auto rounded-md shadow-md" />
-        </div>
-      )}
+      
       {errorMessage && <p className="text-red-500 text-xs italic">{errorMessage}</p>}
     </div>
   );

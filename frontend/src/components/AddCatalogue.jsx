@@ -177,6 +177,7 @@ function AddCatalogue() {
   return (
     <div className="w-[90%] mx-auto mt-8">
       {/*TODO: There needs to be an image upload and auto fill details option for the Seller app coordinator or sales person to create catalogue very fast. Maybe use Gemini's generative AI for this using GCP*/}
+      {/*PITCH: Hindi for uneducated and regional seller to create and digitize their catalogue.*/}
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex gap-1 flex-col">
         <h1 className='text-2xl font-mono my-5'>Catalogue Creation</h1>
         <Button variant='filled' color='amber' className="flex items-center gap-3 max-w-56" id="voiceButton" onClick={toggleListening} >
@@ -360,6 +361,8 @@ function AddCatalogue() {
           </Button>
           <br />
           {/*TODO: make more details additional to reduce the work on a seller NP to create catalogue.*/}
+          {/*TODO: Info icon for each field*/}
+          {/*TODO: Chatbot for queries in multi language support.*/}
           {/*TODO: Make it as per taxonomy and when image is uplaoded it serves the purpose*/}
           {/*PITCH: Now you would think skipping these details will actually decrease the quality of catalogue but no our cv model actually works on this and makes sure that these details are filled exact from the database.
           Humen abhi inn feilds ko khali aur optional choda h to make catalogue digitization easy but if you want you can just get them from existing records too.*/}

@@ -86,7 +86,7 @@ function Catalogue() {
          
 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className='flex justify-between w-[600px]'>
+          <div className='flex gap-x-20 flex-wrap'>
             <div>
               <img src={`${url}${catalog.product_image_1}`} alt={catalog.product_name} className="h-fit m-auto w-10 mb-4 ]" />
             </div>

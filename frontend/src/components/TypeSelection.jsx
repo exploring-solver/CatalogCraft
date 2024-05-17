@@ -10,6 +10,9 @@ function StoreTypeSelection() {
     navigate('/product-select');
   };
 
+
+  //TODO: make a quick catalog creation tab and a custom where this list is involved
+  //TODO: Handle category creation if not listed in a seller node
   return (
     <div className="max-w-md mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Please select the store type:</h2>

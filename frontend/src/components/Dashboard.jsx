@@ -24,7 +24,7 @@ function Dashboard() {
                 setLoading(false);
             });
     }, []); // Use empty dependency array to fetch user details only once on component mount
-
+    {/*TODO: Option to download catalogue csv file. */ }
     return (
         <div className="max-w-4xl mx-auto mt-8">
             {loading ? (

@@ -21,7 +21,7 @@ function Home() {
     arrows: false,
     adaptiveHeight: true
   };
-
+//TODO: Make it professional and change images in caraousel to new idea and execution
   return (
     <div className="container mx-auto mt-5 w-[90%]">
       <h1 className="text-3xl font-bold mb-5">Welcome to CatalogCraft</h1>
@@ -95,16 +95,16 @@ function Home() {
           </div>
         </div>
       </Slider>
+<br /><br />
 
-
-      <div className="flex justify-between items-center mt-8">
+      <div className="flex justify-center items-center mt-8 flex-wrap gap-10">
         {/* Image */}
         <div className="">
           <img src={digi1} alt="Digitize Store Catalogs" className=" object-cover md:w-[600px] w-[200px] " />
         </div>
 
         {/* Text */}
-        <div className='w-[40%]'>
+        <div className='lg:w-[40%]'>
           <h2 className="text-2xl font-bold mb-4 text-gray-700">Digitize Store Catalogs with One Click</h2>
           <p className="text-lg text-gray-700 mb-4">
             Our innovative solution allows you to easily <span className="font-bold text-blue-600">digitize your store catalogs with just one click</span>.
