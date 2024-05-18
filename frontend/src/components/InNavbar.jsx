@@ -39,7 +39,7 @@ function ProfileMenu() {
 
     {
       label: `${user.name}`,
-      icon: UserCircleIcon,
+      icon: UserCircleIcon ,
       to:'/profile'
     },
     {
@@ -214,10 +214,12 @@ const navListItems = [
   {
     label: "All Catalogues",
     icon: CubeTransparentIcon,
+    to: "/catalogs"
   },
   {
-    label: "Your Catalog",
+    label: "Add Catalog",
     icon: CodeBracketSquareIcon,
+    to: "/product-search"
   },
 ];
 
@@ -225,11 +227,11 @@ function NavList() {
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {/* <NavListMenu /> */}
-      {navListItems.map(({ label, icon }, key) => (
+      {navListItems.map(({ label, icon ,to}, key) => (
         <Typography
           key={label}
           as="a"
-          href="#"
+          href={to}
           variant="small"
           color="gray"
           className="font-medium text-blue-gray-500"
@@ -256,7 +258,7 @@ export function ComplexNavbar() {
     );
   }, []);
 
-  const { user } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
@@ -281,7 +283,7 @@ export function ComplexNavbar() {
         </IconButton>
 
         <ProfileMenu />
-        <Button size="sm" variant="text">
+        <Button size="sm" variant="text" onClick={logout}>
           <span>Log out</span>
         </Button>
       </div>

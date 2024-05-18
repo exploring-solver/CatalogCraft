@@ -8,7 +8,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const [role, setRole] = useState('SELLER');
+  // const [role, setRole] = useState('SELLER');
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ function Signup() {
         password,
         name,
         number,
-        role,
+        role:'SELLER',
       });
       console.log(response.data);
       // Handle successful signup, such as redirecting to another page

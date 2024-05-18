@@ -32,10 +32,32 @@ const AuthState = (props) => {
     fetchUserDetails();
   }, []);
 
+
+  const logout = async () => {
+    try {
+      await axios.post('http://panel.mait.ac.in:8012/auth/logout/', {
+        refresh_token: localStorage.getItem('refreshToken'),
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      setIsAuthenticated(false);
+      setUser(null);
+      navigate('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+
   const contextValue = {
     isAuthenticated,
     user,
     loading,
+    logout,
   };
 
   return (

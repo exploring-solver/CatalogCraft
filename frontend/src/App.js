@@ -12,9 +12,11 @@ import Catalogue from './components/CatalogDetails';
 import Catalogs from './components/Catalogs';
 import AuthState from './Context/Auth/AuthState';
 import NavbarMain from './components/NavbarMain';
+import NotFound from './components/Standard/NotFound';
+import ProductSearch from './components/Catalogues/ProductSearch';
 
 function App() {
-  {/*PITCH: include the   Technology Service Provide part for our solution.*/}
+  {/*PITCH: include the   Technology Service Provide part for our solution.*/ }
   return (
     <Router>
       <AuthState>
@@ -24,12 +26,14 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/catalog" element={<Home />} />
           <Route path="/catalogs" element={<Catalogs />} />
-          <Route path="/store-select" element={<StoreTypeSelection />} />
+          {/* <Route path="/store-select" element={<StoreTypeSelection />} /> */}
           <Route path="/product-select" element={<ProductTypeSelection />} />
+          <Route path="/product-search" element={<ProductSearch />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add-catalog" element={<AddCatalogue />} />
           <Route path="/login" element={<Login />} />
           <Route path="/catalogue/:id" element={<Catalogue />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </AuthState>

@@ -4,7 +4,7 @@ import { NavbarWithMegaMenu } from './OutNavbar';
 import { ComplexNavbar } from './InNavbar';
 
 const NavbarMain = () => {
-    const { isAuthenticated, user, loading } = useContext(AuthContext);
+    const { isAuthenticated} = useContext(AuthContext);
     console.log(isAuthenticated);
   return (
     <div>
