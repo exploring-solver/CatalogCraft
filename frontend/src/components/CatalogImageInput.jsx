@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@material-tailwind/react';
 
 const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
   const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = React.createRef();
+  const fileInputRef = useRef();
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -21,6 +21,11 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
     }
   };
 
+  const handleCancelClick = () => {
+    setImagePreview(null);
+    fileInputRef.current.value = null; // Clear the file input
+  };
+
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={name}>
@@ -35,8 +40,18 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
         onChange={handleImageChange}
       />
       {imagePreview && (
-        <div className="mt-4">
-          <img src={imagePreview} alt="Uploaded Preview" className="max-w-[100px] h-auto rounded-md shadow-md" />
+        <div className="relative mt-4">
+          <img
+            src={imagePreview}
+            alt="Uploaded Preview"
+            className="max-w-[150px] h-auto rounded-md shadow-md"
+          />
+          <button
+            onClick={handleCancelClick}
+            className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 hover:bg-red-600"
+          >
+            &times;
+          </button>
         </div>
       )}
       <br />
