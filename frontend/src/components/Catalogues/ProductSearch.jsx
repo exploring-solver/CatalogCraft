@@ -108,6 +108,9 @@ const ProductSearch = () => {
             I am uploading a file to add multiple products
           </Link>
         </div>
+        <CatalogLists />
+        <br /><br />
+        <TemplateCatalog />
       </div>
     </div>
   );
