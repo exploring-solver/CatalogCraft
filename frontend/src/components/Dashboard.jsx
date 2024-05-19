@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Card, CardHeader, CardBody, Typography, Button } from '@material-tailwind/react';
 
 function Dashboard() {
     const [user, setUser] = useState(null);
+    const [catalogues, setCatalogues] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,36 +19,94 @@ function Dashboard() {
             .then((response) => {
                 // Assuming the API response contains user data
                 setUser(response.data);
+                // Fetch the catalogues of the logged-in user
+                return axios.get('http://panel.mait.ac.in:8012/catalogues/', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+            })
+            .then((response) => {
+                setCatalogues(response.data);
                 setLoading(false);
             })
             .catch((error) => {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching data:', error);
                 setLoading(false);
             });
-    }, []); 
-    // Use empty dependency array to fetch user details only once on component mount
+    }, []);
+
     return (
-        <div className="max-w-4xl mx-auto mt-8">
-            {/*TODO: Option to download catalogue csv file. */ }
+        <div className="max-w-4xl mx-auto mt-8 h-screen bg-yellow-50">
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <>
-                    <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                        <h2 className="text-xl font-bold mb-2">Logged in as</h2>
-                        <p><strong>Email:</strong> {user.email}</p>
-                        <p><strong>Name:</strong> {user.name}</p>
-                        <p><strong>Number:</strong> {user.number}</p>
-                        <p><strong>Role:</strong> {user.role} NP</p>
+                    <Card className="mb-4">
+                        <CardHeader className="bg-gray-800 text-white p-5">
+                            <Typography variant="h4" color="white">
+                                Welcome
+                            </Typography>
+                        </CardHeader>
+                        <CardBody>
+                            <Typography variant="h6">Email:<span className='!font-normal text-black'> {user.email}</span></Typography>
+                            <Typography variant="h6">Name: <span className='!font-normal text-black'>{user.name}</span></Typography>
+                            {/* <Typography variant="h6">Number<span className='!font-normal text-black'>: {user.number}</Typography> */}
+                            <Typography variant="h6">Role: <span className='!font-normal text-black'>{user.role}</span></Typography>
+                        </CardBody>
+                    </Card>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <Card>
+                            <CardBody>
+                                <Typography variant="h6" className="mb-2">Your Total Catalogues</Typography>
+                                <Typography variant="h4">{catalogues.length}</Typography>
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardBody>
+                                <Typography variant="h6" className="mb-2">Complete Catalogues</Typography>
+                                <Typography variant="h4">{catalogues.filter(catalogue => catalogue.complete).length}</Typography>
+                            </CardBody>
+                        </Card>
                     </div>
-                    <div className="bg-gray-100 p-4 rounded-lg">
-                        <h2 className="text-xl font-bold mb-2">Catalogs</h2>
-                        {/* Render catalogs here */}
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            <Link to={'/add-catalog'}>
-                                Add Catalog
-                            </Link>
-                        </button>
+                    <br />
+                    <div>
+                        <Card>
+                            <CardBody className="flex flex-col items-start justify-center">
+                                <Typography variant="h6" className="mb-2">Wanna add a new Product?</Typography>
+                                <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    <Link to={'/add-catalog'}>
+                                        Create Catalog
+                                    </Link>
+                                </Button>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    <br />
+                    <div>
+                        <br />
+                        <Card>
+                            <CardHeader className="flex justify-between items-center p-4">
+                                <Typography variant="h6" className='!text-orange-900'>
+                                    Your Catalogues
+                                </Typography>
+                                <Link to={'/catalogues'}>
+                                    <Button variant="text" color="blue">
+                                        View All
+                                    </Button>
+                                </Link>
+                            </CardHeader>
+                            <CardBody>
+                                {catalogues.slice(0, 5).map((catalogue) => (
+                                    <div key={catalogue.id} className="mb-4">
+                                        <Typography variant="h6" className="font-bold">{catalogue.name}</Typography>
+                                        <Typography variant="body2" className="text-gray-600">{catalogue.description}</Typography>
+                                    </div>
+                                ))}
+                            </CardBody>
+                        </Card>
                     </div>
                 </>
             )}
