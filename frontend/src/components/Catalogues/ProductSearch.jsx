@@ -1,16 +1,20 @@
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Button, Input, Typography } from '@material-tailwind/react';
-import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import banner from "../../assets/bg1_digi-transparent.png"
+import banner from "../../assets/bg1_digi-transparent.png";
 import CatalogImageInput from '../CatalogImageInput';
 import { TemplateCatalog } from './TemplateCatalog';
 import CatalogLists from './CatalogLists';
+import axios from 'axios';
+import CataContext from '../Context/Catalogue/CataContext';
+
 const ProductSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [image, setImage] = useState(null);
   const [isListening, setIsListening] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const recognitionRef = useRef(null);
+  const { setSearchResults } = useContext(CataContext);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -42,7 +46,7 @@ const ProductSearch = () => {
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
     }
   };
 
@@ -50,23 +54,63 @@ const ProductSearch = () => {
     setSelectedTemplate(e.target.value);
   };
 
+  const handleImageUpload = async () => {
+    if (image) {
+      const formData = new FormData();
+      formData.append('image', image);
+
+      try {
+        const response = await axios.post('/catalogue/search-similar-images/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('Image upload response:', response.data);
+        // Handle the response data as needed
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.post('/catalogue/search-catalogues/', { searchTerm });
+      console.log('Search response:', response.data);
+      setSearchResults(response.data); // Set the search results to the context
+    } catch (error) {
+      console.error('Error searching catalogues:', error);
+    }
+  };
+
+  const handleTemplateCatalogCreation = async () => {
+    try {
+      const response = await axios.post(`/catalogue/template-catalogues/${selectedTemplate}/`);
+      console.log('Template catalog creation response:', response.data);
+      // Handle the response data as needed
+    } catch (error) {
+      console.error('Error creating template catalog:', error);
+    }
+  };
+
   return (
     <div className='bg-orange-50 flex justify-center items-center'>
       <div className="product-search-container ">
         <img src={banner} className='m-auto w-full max-w-[400px] h-auto' alt="" />
         <br />
-        <Typography variant='h3' className='text-center'>Find your products in the CatalogCraft's catalog</Typography>
+        <Typography variant='h3' className='text-center !text-2xl md:!text-xl'>Find your products in the CatalogCraft's catalog</Typography>
         <br />
         <div className="flex flex-col justify-center items-center mx-5 border-2 border-gray-600 p-4 rounded">
           <Typography variant='h6'>Place your product image here</Typography>
           <CatalogImageInput
             type="file"
-            accept="image/*"
+            accept=".jpeg,.png,.webp,.jpg"
             onChange={handleImageChange}
             className="image-input"
+            setImage={setImage}
           />
           {image && (
-            <Button variant="contained" color="green" className="mt-4 w-[80%]">
+            <Button variant="contained" color="green" className="mt-4 w-[80%]" onClick={handleImageUpload}>
               Upload and Search
             </Button>
           )}
@@ -75,7 +119,7 @@ const ProductSearch = () => {
         <div className="flex gap-10 justify-center items-center mx-5 border-2 border-gray-600 p-4 rounded flex-col">
           <Input
             label='Product name, UPC, EAN, ISBN or ASIN'
-            size='xl'
+            size='lg'
             type="text"
             placeholder="Product name, UPC, EAN, ISBN or ASIN"
             value={searchTerm}
@@ -90,7 +134,7 @@ const ProductSearch = () => {
               </svg>
               {isListening ? "Stop Voice Input" : "Speak Here!!"}
             </Button>
-            <Button variant="contained" color="green" className="mt-4 w-[80%]">
+            <Button variant="contained" color="green" className="mt-4 w-[80%]" onClick={handleSearch}>
               Search
             </Button>
           </div>
@@ -107,10 +151,8 @@ const ProductSearch = () => {
             <option className='' value="template2">Template 2</option>
             <option className='' value="template3">Template 3</option>
           </select>
-          <Button className=''>Create Catalog</Button>
+          <Button className='' onClick={handleTemplateCatalogCreation}>Create Catalog</Button>
         </div>
-        {/* Create Schema and frontend and application design to showcase the effort and explain the architecture. */}
-        {/* PITCH : Include the complexity and database integration to ensure fast and efficient creation. */}
         <div className="flex justify-center items-center flex-wrap gap-5 mx-5">
           <Link className='text-blue-800 text-lg underline' to="/add-catalog" >
             I am adding a product not available in CatalogCraft

@@ -76,11 +76,11 @@ function Dashboard() {
                         <Card>
                             <CardBody className="flex flex-col items-start justify-center">
                                 <Typography variant="h6" className="mb-2">Wanna add a new Product?</Typography>
-                                <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    <Link to={'/add-catalog'}>
+                                <Link to={'/add-catalog'} className='w-fit'>
+                                    <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Create Catalog
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </CardBody>
                         </Card>
                     </div>

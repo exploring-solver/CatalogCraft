@@ -1,35 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CatalogResult from './CatalogResult';
+import CataContext from '../Context/Catalogue/CataContext';
 
 const CatalogLists = () => {
-    const jsonData = [
-        {
-          image: 'path/to/image1.jpg',
-          name: 'Product 1',
-          description: 'Description 1',
-          ASIN: 'ASIN1',
-          EAN: 'EAN1',
-          UPC: 'UPC1',
-          category: 'Category 1',
-        },
-        {
-          image: 'path/to/image2.jpg',
-          name: 'Product 2',
-          description: 'Description 2',
-          ASIN: 'ASIN2',
-          EAN: 'EAN2',
-          UPC: 'UPC2',
-          category: 'Category 2',
-        },
-      ];
-      
+    const { searchResults } = useContext(CataContext);
+
+    if (!searchResults) {
+        return <div>No results found</div>;
+    }
+
     return (
-    <div className='flex flex-wrap justify-center flex-col'>
-      {jsonData.map((product, index) => (
-        <CatalogResult key={index} product={product} />
-      ))}
-    </div>
-  );
+        <div className='flex flex-wrap justify-center'>
+            {searchResults.map((catalog, index) => (
+                <CatalogResult key={index} catalog={catalog} />
+            ))}
+        </div>
+    );
 };
 
 export default CatalogLists;

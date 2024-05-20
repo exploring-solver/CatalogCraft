@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Button } from '@material-tailwind/react';
 
-const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
+const CatalogImageInput = ({ label, name, onChange, errorMessage, setImage }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
 
@@ -24,6 +24,7 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
   const handleCancelClick = () => {
     setImagePreview(null);
     fileInputRef.current.value = null; // Clear the file input
+    setImage(null)
   };
 
   return (
@@ -37,6 +38,7 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
         id={name}
         type="file"
         name={name}
+        accept=".jpeg,.png,.webp,.jpg"
         onChange={handleImageChange}
       />
       {imagePreview && (
@@ -47,8 +49,8 @@ const CatalogImageInput = ({ label, name, onChange, errorMessage }) => {
             className="max-w-[150px] h-auto rounded-md shadow-md"
           />
           <button
-            onClick={handleCancelClick}
-            className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 hover:bg-red-600"
+            onClick={handleCancelClick} 
+            className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 hover:bg-red-600 "
           >
             &times;
           </button>
