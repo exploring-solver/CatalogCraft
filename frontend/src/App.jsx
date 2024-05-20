@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
 import Footer from './components/Footer';
 import Signup from './components/Singup';
@@ -10,6 +10,9 @@ import Catalogue from './components/CatalogDetails';
 import Catalogs from './components/Catalogs';
 import NavbarMain from './components/NavbarMain';
 import NotFound from './components/Standard/NotFound';
+import { TemplateCatalog } from './components/Catalogues/TemplateCatalog';
+import CatalogList from './components/CatalogList';
+import ProfileScreen from './components/Profile/ProfileScreen';
 import ProductSearch from './components/Catalogues/ProductSearch';
 
 function App() {
@@ -22,7 +25,10 @@ function App() {
         <Route path="/catalog" element={<Home />} />
         <Route path="/catalogs" element={<Catalogs />} />
         <Route path="/product-search" element={<ProductSearch />} />
+        <Route path="/catalogues/search/:query" element={<CatalogList />} />
+        <Route path="/catalogues/template/:name" element={<TemplateCatalog />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/add-catalog" element={<AddCatalogue />} />
         <Route path="/login" element={<Login />} />
         <Route path="/catalogue/:id" element={<Catalogue />} />
