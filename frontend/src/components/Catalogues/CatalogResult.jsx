@@ -45,6 +45,7 @@ const ProductListItem = ({ catalog }) => {
             <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>Category:</strong> {category}</Typography>
           </Box>
           <Box className="flex flex-col items-end mr-4 gap-2">
+            <Typography variant='h6'>Condition</Typography>
             <FormControl variant="outlined" className="mb-2">
               <InputLabel>Type</InputLabel>
               <Select

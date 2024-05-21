@@ -81,6 +81,7 @@ const ProductSearch = () => {
           }
         });
         console.log('Image upload response:', response.data);
+      setSearchResults(response.data); // Set the search results to the context
         // Handle the response data as needed
       } catch (error) {
         console.error('Error uploading image:', error);

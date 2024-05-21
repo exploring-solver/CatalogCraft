@@ -31,7 +31,14 @@ const CatalogueLateralForm = () => {
   }, [searchedCatalog.product_name, navigate]); // Run this effect when searchedCatalog.product_name or navigate changes
 
   return (
-    <Card className="w-full max-w-lg mx-auto mt-10">
+    <Card className="w-full max-w-lg mx-auto mt-10 bg-gray-100 p-5">
+      <CardHeader variant="gradient" color="gray" className="mb-4 p-4">
+        <Typography variant="h4" color="white">
+          Catalog Details
+        </Typography>
+      </CardHeader>
+      <CardBody className="flex flex-col gap-4">
+        {/* Read-Only Preview Section */}
       <div className="grid grid-cols-5 gap-2 mb-4">
         {[1, 2, 3, 4, 5].map((index) => {
           const imageKey = `product_image_${index}`;
@@ -42,20 +49,13 @@ const CatalogueLateralForm = () => {
                 key={index}
                 src={`${backend_url}${imageUrl}`}
                 alt={`Preview ${index}`}
-                className="h-16 w-16 object-cover"
+                className="h-16 w-16 object-cover border-2 border-gray-600"
               />
             );
           }
           return null;
         })}
       </div>
-      <CardHeader variant="gradient" color="gray" className="mb-4 p-4">
-        <Typography variant="h4" color="white">
-          Catalog Details
-        </Typography>
-      </CardHeader>
-      <CardBody className="flex flex-col gap-4">
-        {/* Read-Only Preview Section */}
         <div className="mb-4">
           <Typography variant="h6" className="mb-2">Name</Typography>
           <Typography className="mb-4">{searchedCatalog.product_name}</Typography>

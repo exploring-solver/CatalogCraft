@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CatalogImageInput from './CatalogImageInput';
 import { Button, Input } from '@material-tailwind/react';
@@ -15,13 +15,15 @@ function AddCatalogue() {
     product_name: '',
     mrp: '',
     selling_prize: '',
-    buying_prize: '',
+    asin: '',
     hsn_code: '',
     gst_percentage: '',
     unit: '',
     quantity: '',
     standardized: '',
     category: '',
+    upc: '',
+    seller_sku:'',
     mapped_to_master: '',
     product_image_1: null,
     product_image_2: null,
@@ -77,7 +79,7 @@ function AddCatalogue() {
       }
     }
   }
-
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
   const BASE_URL = 'http://panel.mait.ac.in:3012';
   const sendSpeechToServer = (words) => {
     const prompt = "I am giving you these details of a form arrange the data in an array and separate them by a comma and if I tell in hindi then also just convert them in english and arrange the data in an array and separate them by a comma, " + words.join(', ');
@@ -138,13 +140,15 @@ function AddCatalogue() {
         product_name: '',
         mrp: '',
         selling_prize: '',
-        buying_prize: '',
+        asin: '',
         hsn_code: '',
         gst_percentage: '',
         unit: '',
         quantity: '',
         standardized: '',
         category: '',
+        upc: '',
+        seller_sku:'',
         mapped_to_master: '',
         product_image_1: null,
         product_image_2: null,
@@ -172,6 +176,14 @@ function AddCatalogue() {
       sendSpeechToServer(wordsArray);
     }
   };
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch(`${backend_url}/catalogue/categories/`)
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.error('Error fetching categories:', error));
+  }, []);
 
   return (
     <div className="w-[90%] mx-auto mt-8">
@@ -186,6 +198,7 @@ function AddCatalogue() {
           </svg>
           {isListening ? "Stop Voice Input" : "Start Voice Input"}
         </Button>
+        <br />
         <div className='sm:flex gap-3 flex-wrap'>
           <div className="form-group">
             <Input
@@ -226,19 +239,6 @@ function AddCatalogue() {
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.selling_prize}</p>}
           </div>
           <div className="form-group">
-            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
-            <Input
-              label='Buying Price'
-              type="text"
-              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="buying_prize"
-              name="buying_prize"
-              value={formData.buying_prize}
-              onChange={handleChange}
-            />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.buying_prize}</p>}
-          </div>
-          <div className="form-group">
             {/* <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> */}
             <Input
               label='HSN Code'
@@ -263,6 +263,45 @@ function AddCatalogue() {
               onChange={handleChange}
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.gst_percentage}</p>}
+          </div>
+          <div className="form-group">
+            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
+            <Input
+              label='ASIN'
+              type="text"
+              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="asin"
+              name="asin"
+              value={formData.asin}
+              onChange={handleChange}
+            />
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.asin}</p>}
+          </div>
+          <div className="form-group">
+            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
+            <Input
+              label='UPC'
+              type="text"
+              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="upc"
+              name="upc"
+              value={formData.upc}
+              onChange={handleChange}
+            />
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.upc}</p>}
+          </div>
+          <div className="form-group">
+            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
+            <Input
+              label='Seller SKU'
+              type="text"
+              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="seller_sku"
+              name="seller_sku"
+              value={formData.seller_sku}
+              onChange={handleChange}
+            />
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.seller_sku}</p>}
           </div>
           <div className="form-group">
             {/* <label htmlFor="unit" className="block text-gray-700 text-sm font-bold mb-2">Unit</label> */}
@@ -294,17 +333,27 @@ function AddCatalogue() {
 
           {/*TODO: there needs to be a select option from react select to make it a select with search for the seller NP.*/}
           <div className="form-group">
-            {/* <label htmlFor="category" className="block text-gray-700 text-sm font-bold mb-2">Category</label> */}
-            <Input
-              label='Category'
-              type="text"
+            <label htmlFor="category" className="block text-gray-700 text-sm font-bold mb-2">
+              Category
+            </label>
+            <select
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="category"
               name="category"
               value={formData.category}
               onChange={handleChange}
-            />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.category}</p>}
+            >
+              <option value="">Select a category</option>
+              {Array.isArray(categories.categories) &&
+                categories.categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+            </select>
+            {errorMessages && (
+              <p className="text-red-500 text-xs italic">{errorMessages.category}</p>
+            )}
           </div>
         </div>
 
