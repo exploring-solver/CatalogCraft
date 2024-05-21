@@ -71,8 +71,8 @@ const navListMenuItems = [
     icon: RectangleGroupIcon,
   },
   {
-    title: "Special Offers",
-    description: "Explore limited-time deals and bundles",
+    title: "Help",
+    description: "Know more about the app",
     icon: TagIcon,
   },
 ];
@@ -176,11 +176,17 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <a href="http://panel.mait.ac.in:8012/media/images/CatalogCraft.apk">
-          <ListItem className="flex items-center gap-2 py-2 pr-4">
-            Download App
+        <div className="flex">
+        <a href="/help">
+          <ListItem className="py-2 pr-4">
+            Help
           </ListItem>
         </a>
+        <a href="http://panel.mait.ac.in:8012/media/images/CatalogCraft.apk">
+          <ListItem className="py-2 pr-4">
+            Download App
+          </ListItem>
+        </a></div>
       </Typography>
     </List>
   );
