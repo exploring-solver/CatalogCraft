@@ -4,7 +4,7 @@ import CataContext from '../Context/Catalogue/CataContext';
 
 const CatalogLists = () => {
     const { searchResults } = useContext(CataContext);
-
+    
     if (!searchResults) {
         return <div>No results found</div>;
     }

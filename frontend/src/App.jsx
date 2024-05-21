@@ -14,6 +14,7 @@ import { TemplateCatalog } from './components/Catalogues/TemplateCatalog';
 import CatalogList from './components/CatalogList';
 import ProfileScreen from './components/Profile/ProfileScreen';
 import ProductSearch from './components/Catalogues/ProductSearch';
+import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/catalogues/template/:name" element={<TemplateCatalog />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/lateral" element={<CatalogueLateralForm />} />
         <Route path="/add-catalog" element={<AddCatalogue />} />
         <Route path="/login" element={<Login />} />
         <Route path="/catalogue/:id" element={<Catalogue />} />

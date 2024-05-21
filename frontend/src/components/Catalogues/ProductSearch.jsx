@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Button, Input, Typography } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import banner from "../../assets/bg1_digi-transparent.png";
 import CatalogImageInput from '../CatalogImageInput';
 import { TemplateCatalog } from './TemplateCatalog';
@@ -12,9 +12,24 @@ const ProductSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [image, setImage] = useState(null);
   const [isListening, setIsListening] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState('');
+  const [templates, setTemplates] = useState(null);
   const recognitionRef = useRef(null);
-  const { setSearchResults } = useContext(CataContext);
+  const { setSearchResults , setSearchedCatalog, selectedTemplate, setSelectedTemplate} = useContext(CataContext);
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
+  const fetchTemplates = async () => {
+    try {
+      const response = await axios.get(`${backend_url}/catalogue/templates/`);
+      setTemplates(response.data); // Update state with fetched templates
+    } catch (error) {
+      console.error('Error fetching templates:', error);
+      // Handle error gracefully, e.g., display an error message to the user
+    }
+  };
+
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -60,7 +75,7 @@ const ProductSearch = () => {
       formData.append('image', image);
 
       try {
-        const response = await axios.post('/catalogue/search-similar-images/', formData, {
+        const response = await axios.post(`${backend_url}/catalogue/search-similar-images/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -75,19 +90,20 @@ const ProductSearch = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('/catalogue/search-catalogues/', { searchTerm });
+      const response = await axios.get(`${backend_url}/catalogue/search-catalogues/?query=${searchTerm}`);
       console.log('Search response:', response.data);
       setSearchResults(response.data); // Set the search results to the context
     } catch (error) {
       console.error('Error searching catalogues:', error);
     }
   };
-
+  
   const handleTemplateCatalogCreation = async () => {
     try {
-      const response = await axios.post(`/catalogue/template-catalogues/${selectedTemplate}/`);
+      const response = await axios.get(`${backend_url}/catalogue/template-catalogues/${selectedTemplate}/`);
       console.log('Template catalog creation response:', response.data);
       // Handle the response data as needed
+      navigate(`/catalogues/template/${selectedTemplate}`)
     } catch (error) {
       console.error('Error creating template catalog:', error);
     }
@@ -147,9 +163,13 @@ const ProductSearch = () => {
             className="template-dropdown p-2 border border-black rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black bg-transparent"
           >
             <option className='' value="">Select a template...</option>
-            <option className='' value="template1">Template 1</option>
-            <option className='' value="template2">Template 2</option>
-            <option className='' value="template3">Template 3</option>
+
+            {/* Dynamically populate options based on API response */}
+            {templates && templates.map((template) => (
+              <option key={template.id} className='' value={template.id}>
+                {template}
+              </option>
+            ))}
           </select>
           <Button className='' onClick={handleTemplateCatalogCreation}>Create Catalog</Button>
         </div>
@@ -163,7 +183,7 @@ const ProductSearch = () => {
         </div>
         <CatalogLists />
         <br /><br />
-        <TemplateCatalog />
+        <TemplateCatalog  selectedTemplate = {selectedTemplate}/>
       </div>
     </div>
   );

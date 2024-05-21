@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -9,16 +9,46 @@ import {
   Button,
 } from '@material-tailwind/react';
 import CataContext from '../Context/Catalogue/CataContext';
-// The component that shows up after selecting from existing Catalog
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import ProductSearch from './ProductSearch';
+
 const CatalogueLateralForm = () => {
   const [showAdditional, setShowAdditional] = useState(false);
   const { searchedCatalog } = useContext(CataContext);
+  const navigate = useNavigate(); // Get history object from useHistory
+
   const handleToggleAdditional = () => {
     setShowAdditional(!showAdditional);
   };
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+  useEffect(() => {
+    // Check if product_name is null
+    if (searchedCatalog.product_name === null) {
+      // Navigate to /product-search
+      return <ProductSearch/>
+    }
+  }, [searchedCatalog.product_name, navigate]); // Run this effect when searchedCatalog.product_name or navigate changes
 
   return (
     <Card className="w-full max-w-lg mx-auto mt-10">
+      <div className="grid grid-cols-5 gap-2 mb-4">
+        {[1, 2, 3, 4, 5].map((index) => {
+          const imageKey = `product_image_${index}`;
+          const imageUrl = searchedCatalog[imageKey];
+          if (imageUrl) {
+            return (
+              <img
+                key={index}
+                src={`${backend_url}${imageUrl}`}
+                alt={`Preview ${index}`}
+                className="h-16 w-16 object-cover"
+              />
+            );
+          }
+          return null;
+        })}
+      </div>
       <CardHeader variant="gradient" color="gray" className="mb-4 p-4">
         <Typography variant="h4" color="white">
           Catalog Details
@@ -28,21 +58,15 @@ const CatalogueLateralForm = () => {
         {/* Read-Only Preview Section */}
         <div className="mb-4">
           <Typography variant="h6" className="mb-2">Name</Typography>
-          <Typography className="mb-4">{searchedCatalog.name}</Typography>
-          <Typography variant="h6" className="mb-2">Description</Typography>
-          <Typography className="mb-4">{searchedCatalog.description}</Typography>
+          <Typography className="mb-4">{searchedCatalog.product_name}</Typography>
+          <Typography variant="h6" className="mb-2">MRP</Typography>
+          <Typography className="mb-4">₹{searchedCatalog.mrp}</Typography>
+          <Typography variant="h6" className="mb-2">GST Percentage</Typography>
+          <Typography className="mb-4">{searchedCatalog.gst_percentage}%</Typography>
           <Typography variant="h6" className="mb-2">ASIN</Typography>
-          <Typography className="mb-4">{searchedCatalog.ASIN}</Typography>
+          <Typography className="mb-4">{searchedCatalog.asin}</Typography>
           <Typography variant="h6" className="mb-2">UPC</Typography>
-          <Typography className="mb-4">{searchedCatalog.UPC}</Typography>
-          <Typography variant="h6" className="mb-2">Images</Typography>
-          <div className="grid grid-cols-5 gap-2 mb-4">
-            {searchedCatalog.images.map((image, index) => (
-              <img key={index} src={image} alt={`Preview ${index}`} className="h-16 w-16 object-cover" />
-            ))}
-          </div>
-          <Typography variant="h6" className="mb-2">About</Typography>
-          <Typography className="mb-4">{searchedCatalog.about}</Typography>
+          <Typography className="mb-4">{searchedCatalog.upc}</Typography>
           <Typography variant="h6" className="mb-2">Category</Typography>
           <Typography className="mb-4">{searchedCatalog.category}</Typography>
         </div>
