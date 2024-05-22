@@ -24,7 +24,7 @@ function Translator() {
     }, [])
     return (
         <>
-            <div className='absolute right-10 top-20' ref={googleTranslateRef}></div>
+            <div className='fixed right-2 top-5' ref={googleTranslateRef}></div>
         </>
     )
 }
