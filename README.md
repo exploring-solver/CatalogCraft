@@ -66,10 +66,10 @@ In some cases, a combination of these interfaces are required to digitize an SKU
 
 ## Team
 
-1. 
-2. 
-3. 
-4. 
+1. Aman Sharma
+2. Ravi k Banchhiwal
+3. Ishaan Minocha
+4. Shivam Kumar Jha
 
 
 ## Thank You!
