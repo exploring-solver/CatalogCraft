@@ -15,12 +15,14 @@ import CatalogList from './components/CatalogList';
 import ProfileScreen from './components/Profile/ProfileScreen';
 import ProductSearch from './components/Catalogues/ProductSearch';
 import Help from './components/Help';
+import Translator from './components/Translator';
 import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 
 function App() {
   return (
     <>
       <NavbarMain />
+      <Translator/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
