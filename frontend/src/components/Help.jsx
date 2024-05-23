@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Help() {
   return (
@@ -6,20 +6,23 @@ function Help() {
       <div className="rounded-xl p-4 border-r-2 border-gray-300 fixed z-20">
         <h2 className="text-xl font-bold mb-4 text-center">Help Page</h2>
         <ul className="space-y-2">
-          <li><a href="#overview" className="text-blue-500 hover:underline">Overview</a></li>
-          <li><a href="#setup" className="text-blue-500 hover:underline">Setup</a></li>
-          <li><a href="#workflow" className="text-blue-500 hover:underline">Workflow</a></li>
-          <li><a href="#authentication" className="text-blue-500 hover:underline">Authentication</a></li>
-          <li><a href="#create-store" className="text-blue-500 hover:underline">Create Store</a></li>
-          <li><a href="#manage-store" className="text-blue-500 hover:underline">Manage Store</a></li>
-          <li><a href="#make-catalogue" className="text-blue-500 hover:underline">Make Catalogue</a></li>
-          <li><a href="#admin-panel" className="text-blue-500 hover:underline">Admin Panel</a></li>
-          <li><a href="#dashboard" className="text-blue-500 hover:underline">Analytical Dashboard</a></li>
-          <li><a href="#database" className="text-blue-500 hover:underline">Database</a></li>
+          <li><Link to="#overview" className="text-blue-500 hover:underline">Overview</Link></li>
+          <li><Link to="#setup" className="text-blue-500 hover:underline">Setup</Link></li>
+          <li><Link to="#workflow" className="text-blue-500 hover:underline">Workflow</Link></li>
+          <li><Link to="#authentication" className="text-blue-500 hover:underline">Authentication</Link></li>
+          <li><Link to="#create-store" className="text-blue-500 hover:underline">Create Store</Link></li>
+          <li><Link to="#manage-store" className="text-blue-500 hover:underline">Manage Store</Link></li>
+          <li><Link to="#make-catalogue" className="text-blue-500 hover:underline">Make Catalogue</Link></li>
+          <li><Link to="#admin-panel" className="text-blue-500 hover:underline">Admin Panel</Link></li>
+          <li><Link to="#dashboard" className="text-blue-500 hover:underline">Analytical Dashboard</Link></li>
+          <li><Link to="#database" className="text-blue-500 hover:underline">Database</Link></li>
+          <li><Link to="/product-search" className="text-blue-500 hover:underline">Product Search</Link></li>
+          <li><Link to="/bulk-data" className="text-blue-500 hover:underline">Bulk Data</Link></li>
+          <li><Link to="/my-catalog" className="text-blue-500 hover:underline">My Catalog</Link></li>
         </ul>
       </div>
 
-      <div className="p-8 ml-40">
+      <div className="p-8 ml-48 max-w-4xl ">
         <h1 className="text-2xl font-bold mb-6">Get Started</h1>
 
         <section id="overview" className="mb-8">
@@ -90,6 +93,27 @@ function Help() {
           <h2 className="text-xl font-semibold mb-4">Database</h2>
           <p>
             All store data is stored securely in the database. The database allows for CRUD (Create, Read, Update, Delete) operations and efficient data fetching.
+          </p>
+        </section>
+
+        <section id="product-search" className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Product Search</h2>
+          <p>
+            Search and list products using existing catalogs. Enable fast digitization through image search.
+          </p>
+        </section>
+
+        <section id="bulk-data" className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Bulk Data</h2>
+          <p>
+            Add products in bulk using templates and multi-add features. Use voice and image-based input for efficient catalog digitization.
+          </p>
+        </section>
+
+        <section id="my-catalog" className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">My Catalog</h2>
+          <p>
+            View and manage your catalogs. Scan UPC barcodes to see products in the database.
           </p>
         </section>
       </div>

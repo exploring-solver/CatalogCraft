@@ -28,6 +28,14 @@ export function TopNavigator({ setCurrentSection }) {
       >
         Template Catalog
       </Button>
+      <Button
+        color="blue"
+        variant="filled"
+        className="mx-2"
+        onClick={() => setCurrentSection('barcode')}
+      >
+        Barcode Scanner
+      </Button>
     </div>
   );
 }

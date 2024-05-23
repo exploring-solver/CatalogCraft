@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Typography, Button } from '@material-tailwind/react';
+import { Card, CardHeader, CardBody, Typography, Button, Spinner } from '@material-tailwind/react';
 
 function Dashboard() {
     const [user, setUser] = useState(null);
@@ -40,7 +40,9 @@ function Dashboard() {
     return (
         <div className="max-w-4xl mx-auto mt-8 h-screen bg-yellow-50">
             {loading ? (
-                <p>Loading...</p>
+                <div className='flex justify-center items-center'>
+                <Spinner className=" h-16 w-16 text-gray-900/50" />
+                </div>
             ) : (
                 <>
                     <Card className="mb-4">
@@ -92,7 +94,7 @@ function Dashboard() {
                                 <Typography variant="h6" className='!text-orange-900'>
                                     Your Catalogues
                                 </Typography>
-                                <Link to={'/catalogues'}>
+                                <Link to={'/my-cata'}>
                                     <Button variant="text" color="blue">
                                         View All
                                     </Button>

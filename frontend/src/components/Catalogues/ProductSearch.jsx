@@ -8,6 +8,7 @@ import CatalogLists from './CatalogLists';
 import axios from 'axios';
 import CataContext from '../Context/Catalogue/CataContext';
 import { TopNavigator } from '../Utils/TopNavigator';
+import { BarcodeScanner } from '../Standard/BarcodeScanner';
 
 const ProductSearch = () => {
   const [currentSection, setCurrentSection] = useState('image');
@@ -186,6 +187,12 @@ const ProductSearch = () => {
             </Button>
           </div>
         )}
+        {currentSection === 'barcode' && (
+          <div className="dropdown-container flex flex-col gap-4 justify-center items-center my-4 mx-5 border-2 border-gray-600 p-4 rounded">
+            <BarcodeScanner/>
+          </div>
+        )}
+        <br />
         <div className="flex justify-center items-center flex-wrap gap-5 mx-5">
           <Link className='text-blue-800 text-lg underline' to="/add-catalog" >
             I am adding a product not available in CatalogCraft

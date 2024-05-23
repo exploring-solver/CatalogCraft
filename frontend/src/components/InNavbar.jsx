@@ -22,10 +22,12 @@ import {
   LifebuoyIcon,
   PowerIcon,
   Bars2Icon,
+  ChartBarSquareIcon,
 } from "@heroicons/react/24/solid";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import AuthContext from "./Context/Auth/AuthContext";
 import Translator from "./Translator";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -96,7 +98,7 @@ function ProfileMenu() {
         {profileMenuItems.map(({ label, icon, to }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <a href={to}>
+            <a key={label} href={to}>
               <MenuItem
                 key={label}
                 onClick={closeMenu}
@@ -133,6 +135,11 @@ const navListItems = [
   //   label: "",
   //   icon: UserCircleIcon,
   // },
+  {
+    label: "Dashboard",
+    icon: ChartBarSquareIcon,
+    to: "/dashboard"
+  },
   {
     label: "All Catalogues",
     icon: CubeTransparentIcon,
