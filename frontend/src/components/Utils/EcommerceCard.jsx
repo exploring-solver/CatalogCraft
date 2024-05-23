@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-export function EcommerceCard({ imageUrl, productName, price, description ,upc }) {
+export function EcommerceCard({ imageUrl, productName, price, description, upc }) {
   return (
     <Card className="w-96 h-80 sm:h-96 md:h-[28rem] lg:h-[32rem] xl:h-[36rem]">
       <CardHeader shadow={false} floated={false} className="h-3/5">
@@ -41,7 +41,10 @@ export function EcommerceCard({ imageUrl, productName, price, description ,upc }
         <Button
           ripple={false}
           fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 bg-yellow-800 hover:bg-yellow-700"
+          className="bg-blue-gray-900/10 text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+          style={{
+            background: "linear-gradient(90deg, #1c75bc, #4aa1e0 51%, #1c75bc) var(--x, 100%) / 200%"
+          }}
         >
           View catalogue
         </Button>

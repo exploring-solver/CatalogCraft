@@ -70,7 +70,7 @@ const CatalogueLateralForm = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const formDataWithImages = new FormData();
-      
+
       for (let i = 1; i <= 5; i++) {
         formDataWithImages.append(`product_image_${i}`, searchedCatalog[`product_image_${i}`]);
       }
@@ -157,15 +157,15 @@ const CatalogueLateralForm = () => {
         <Input label="Seller SKU" size="lg" name="seller_sku" value={formData.seller_sku} onChange={handleChange} />
         <Input label="Your Price" size="lg" name="selling_prize" value={formData.selling_prize} onChange={handleChange} />
         <Input label="Quantity" size="lg" name="quantity" value={formData.quantity} onChange={handleChange} />
-        <Input label="Item Condition" size="lg" name="item_condition" value={formData.item_condition} onChange={handleChange} />
         <Input label="HSN Code" size="lg" name="hsn_code" value={formData.hsn_code} onChange={handleChange} />
 
-        <Button variant="text" onClick={handleToggleAdditional}>
+        <Button variant="text" className='bg-gray-500 w-fit' onClick={handleToggleAdditional}>
           {showAdditional ? 'Hide Additional Details' : 'Show Additional Details'}
         </Button>
 
         {showAdditional && (
           <>
+            <Input label="Item Condition" size="lg" name="item_condition" value={formData.item_condition} onChange={handleChange} />
             <Input label="Add offer" size="lg" name="add_offer" value={formData.add_offer} onChange={handleChange} />
             <Input label="Additional Description" size="lg" name="additional_description" value={formData.additional_description} onChange={handleChange} />
             <Input label="Product Tax Code" size="lg" name="product_tax_code" value={formData.product_tax_code} onChange={handleChange} />

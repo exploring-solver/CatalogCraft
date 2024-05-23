@@ -37,7 +37,7 @@ function CatalogList() {
     <div className="mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8 text-gray-700">Catalogues by Category</h1>
       {Object.entries(catalogsByCategory).map(([category, catalogs]) => (
-        <div key={category} className="mb-8 shadow px-5 py-5 rounded">
+        <div key={category} className="mb-8 shadow-lg shadow-black px-5 py-5 rounded">
           <h2 className="text-xl font-bold mb-4 text-orange-700">{category}</h2>
           <hr />
           <div className="flex flex-wrap gap-10 ">

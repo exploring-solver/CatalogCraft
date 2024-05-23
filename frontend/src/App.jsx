@@ -20,6 +20,7 @@ import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 import MyCatalogs from './components/Catalogues/MyCatalogs';
 import UserCatalogCard from './components/Utils/UserCatalogDetails';
 import BulkData from './components/Catalogues/BulkData';
+import { BulkDataAddition } from './components/Catalogues/BulkDataAddition';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/lateral" element={<CatalogueLateralForm />} />
         <Route path="/add-catalog" element={<AddCatalogue />} />
         <Route path="/bulk-data" element={<BulkData />} />
+        <Route path="/bulk-data-show" element={<BulkDataAddition />} />
         <Route path="/login" element={<Login />} />
         <Route path="/help" element={<Help />} />
         <Route path="/catalogue/:id" element={<Catalogue />} />

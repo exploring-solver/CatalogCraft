@@ -48,7 +48,7 @@ export function CatalogCard({
         className="mb-4 grid h-10 place-items-center"
       >
         <Typography variant="h6" color="white">
-          Manage Catalog
+          Create Catalog
         </Typography>
       </CardHeader>
       <CardBody className="flex flex-col gap-4">
@@ -60,7 +60,7 @@ export function CatalogCard({
                 key={index}
                 src={`${backend_url}${image}`}
                 alt={`Preview ${index + 1}`}
-                className="h-16 w-16 object-cover"
+                className="h-16 w-16 object-cover border-[1px] rounded shadow border-black p-1"
               />
             ))
           ) : (

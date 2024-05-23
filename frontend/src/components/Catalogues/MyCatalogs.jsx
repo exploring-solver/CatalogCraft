@@ -39,7 +39,7 @@ const MyCatalogs = () => {
             <h1 className="text-3xl font-bold mb-8 text-gray-700">Your Catalogues by Category</h1>
             {categories.map(category => (
                 <div key={category} className="mb-8 shadow px-5 py-5 rounded">
-                    <h2 className="text-xl font-bold mb-4 text-orange-700">{category}</h2>
+                    <h2 className="text-xl font-bold mb-4 text-blue-700">{category}</h2>
                     <hr />
                     <div className="flex flex-wrap gap-10">
                         {catalogs.filter(catalog => catalog.category === category).map(catalog => (
