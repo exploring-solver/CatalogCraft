@@ -18,6 +18,7 @@ import Help from './components/Help';
 import Translator from './components/Translator';
 import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 import MyCatalogs from './components/Catalogues/MyCatalogs';
+import UserCatalogCard from './components/Utils/UserCatalogDetails';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/help" element={<Help />} />
         <Route path="/catalogue/:id" element={<Catalogue />} />
+        <Route path="/yourcatalogue/:id" element={<UserCatalogCard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

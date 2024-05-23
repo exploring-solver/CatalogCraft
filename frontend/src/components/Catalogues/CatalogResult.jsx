@@ -27,7 +27,7 @@ const ProductListItem = ({ catalog }) => {
         component="img"
         src={`${backend_url}${product_image_1}`}
         alt={product_name}
-        className="w-10 h-10 object-cover"
+        className="w-24 object-fit border-[1px] bg-gray-200 shadow border-black p-2"
       />
       <CardContent className="flex ml-4 items-center gap-3">
         <div className=''>

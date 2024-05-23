@@ -23,7 +23,8 @@ const ProductSearch = () => {
   const fetchTemplates = async () => {
     try {
       const response = await axios.get(`${backend_url}/catalogue/templates/`);
-      setTemplates(response.data); // Update state with fetched templates
+      console.log(response.data); // Update state with fetched templates
+      setTemplates(response.data);
     } catch (error) {
       console.error('Error fetching templates:', error);
       // Handle error gracefully, e.g., display an error message to the user
@@ -178,7 +179,7 @@ const ProductSearch = () => {
               </option>
               {templates && templates.map((template) => (
                 <option key={template.id} className="" value={template.id}>
-                  {template.name}
+                  {template}
                 </option>
               ))}
             </select>

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import { EcommerceCard } from './Utils/EcommerceCard';
+import { Spinner } from '@material-tailwind/react';
 
 function Catalogs() {
   const [catalogsByCategory, setCatalogsByCategory] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
   const url = "http://panel.mait.ac.in:8012";
 
   useEffect(() => {
@@ -26,11 +28,21 @@ function Catalogs() {
         setCatalogsByCategory(catalogsGroupedByCategory);
       } catch (error) {
         console.error('Error fetching catalogs:', error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching data
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+       <Spinner/>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-8">

@@ -43,12 +43,13 @@ const MyCatalogs = () => {
                     <hr />
                     <div className="flex flex-wrap gap-10">
                         {catalogs.filter(catalog => catalog.category === category).map(catalog => (
-                            <Link key={catalog.id} to={`/catalogue/${catalog.id}`} className="block">
+                            <Link key={catalog.id} to={`/yourcatalogue/${catalog.id}`} className="block">
                                 <EcommerceCard
                                     imageUrl={`${backend_url}${catalog.product_image_1}`}
                                     productName={catalog.product_name}
                                     price={`${catalog.selling_prize}`}
                                     description={`MRP: ${catalog.mrp}`}
+                                    upc={`${catalog.upc}`}
                                 />
                             </Link>
                         ))}
