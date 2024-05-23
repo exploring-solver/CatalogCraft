@@ -19,6 +19,7 @@ import Translator from './components/Translator';
 import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 import MyCatalogs from './components/Catalogues/MyCatalogs';
 import UserCatalogCard from './components/Utils/UserCatalogDetails';
+import BulkData from './components/Catalogues/BulkData';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/lateral" element={<CatalogueLateralForm />} />
         <Route path="/add-catalog" element={<AddCatalogue />} />
+        <Route path="/bulk-data" element={<BulkData />} />
         <Route path="/login" element={<Login />} />
         <Route path="/help" element={<Help />} />
         <Route path="/catalogue/:id" element={<Catalogue />} />

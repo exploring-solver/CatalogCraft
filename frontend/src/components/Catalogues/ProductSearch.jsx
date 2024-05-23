@@ -198,7 +198,7 @@ const ProductSearch = () => {
           <Link className='text-blue-800 text-lg underline' to="/add-catalog" >
             I am adding a product not available in CatalogCraft
           </Link>
-          <Link className='text-blue-800 text-lg underline' to="/upload-products" >
+          <Link className='text-blue-800 text-lg underline' to="/bulk-data" >
             I am uploading a file to add multiple products
           </Link>
         </div>
