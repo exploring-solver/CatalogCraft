@@ -40,7 +40,7 @@ function Dashboard() {
     return (
         <div className="max-w-4xl mx-auto mt-8 h-screen bg-yellow-50">
             {loading ? (
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center items-center'> 
                 <Spinner className=" h-16 w-16 text-gray-900/50" />
                 </div>
             ) : (
