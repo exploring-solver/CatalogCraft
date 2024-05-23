@@ -17,16 +17,17 @@ import ProductSearch from './components/Catalogues/ProductSearch';
 import Help from './components/Help';
 import Translator from './components/Translator';
 import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
+import MyCatalogs from './components/Catalogues/MyCatalogs';
 
 function App() {
   return (
     <>
       <NavbarMain />
-      <Translator/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/catalog" element={<Home />} />
+        <Route path="/my-cata" element={<MyCatalogs />} />
         <Route path="/catalogs" element={<Catalogs />} />
         <Route path="/product-search" element={<ProductSearch />} />
         <Route path="/catalogues/search/:query" element={<CatalogList />} />

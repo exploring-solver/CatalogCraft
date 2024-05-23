@@ -6,7 +6,7 @@ const CatalogLists = () => {
     const { searchResults } = useContext(CataContext);
     
     if (!searchResults) {
-        return <div>No results found</div>;
+        return <div className='text-center mt-10 underline'>No Catalog searced/found</div>;
     }
 
     return (

@@ -3,7 +3,7 @@ import CataContext from './CataContext';
 
 const CataState = (props) => {
     const [searchedCatalog, setSearchedCatalog] = useState(null);
-    const [searchResults, setSearchResults] = useState(null);
+    const [searchResults, setSearchResults] = useState('');
     const [selectedTemplate, setSelectedTemplate] = useState('');
 
     const contextValue = {

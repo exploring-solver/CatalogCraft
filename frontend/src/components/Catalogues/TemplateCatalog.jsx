@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { CatalogCard } from '../Utils/CatalogCard';
 import { Typography } from '@material-tailwind/react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export function TemplateCatalog() {
   const { name: selectedTemplate } = useParams();
   const [catalogs, setCatalogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchCatalogs = async () => {
       try {
-        const response = await axios.get(`http://panel.mait.ac.in:8012/catalogue/template-catalogues/${selectedTemplate}/`);
+        const response = await axios.get(`${backend_url}/catalogue/template-catalogues/${selectedTemplate}/`);
         const formattedData = response.data.map(catalog => ({
           ...catalog,
           images: [
@@ -33,14 +35,48 @@ export function TemplateCatalog() {
     };
 
     fetchCatalogs();
-  }, [selectedTemplate]); 
+  }, [selectedTemplate, backend_url]);
 
-  const onSave = (index) => {
-    console.log(`Save catalog at index: ${index}`);
+  const handleSubmit = async (catalogData) => {
+    if (window.confirm('Are you sure you want to create this catalog?')) {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const formDataWithImages = new FormData();
+
+        for (let i = 1; i <= 5; i++) {
+          if (catalogData[`product_image_${i}`]) {
+            formDataWithImages.append(`product_image_${i}`, catalogData[`product_image_${i}`]);
+          }
+        }
+        for (const key in catalogData) {
+          if (!key.startsWith('product_image_')) {
+            formDataWithImages.append(key, catalogData[key]);
+          }
+        }
+        const response = await axios.post(`${backend_url}/catalogue/create/`, formDataWithImages, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        console.log(response.data);
+        alert('Catalogue Created Successfully!!');
+        setCatalogs(prevCatalogs => prevCatalogs.filter(item => item.id !== catalogData.id));
+      } catch (error) {
+        console.error('Catalogue creation error:', error);
+        if (error.response && error.response.data) {
+          alert('Error creating catalogue: ' + JSON.stringify(error.response.data));
+        }
+      }
+    }
   };
 
-  const onRemove = (index) => {
-    console.log(`Remove catalog at index: ${index}`);
+  const onRemove = (catalog) => {
+    if (window.confirm('Are you sure you want to remove this catalog?')) {
+      setCatalogs(prevCatalogs => prevCatalogs.filter(item => item.id !== catalog.id));
+      alert('Catalogue removed successfully!');
+    }
   };
 
   if (loading) {
@@ -54,17 +90,12 @@ export function TemplateCatalog() {
   return (
     <div className="flex flex-wrap mt-10 gap-10 bg-gray-50 p-5 justify-center">
       {catalogs && catalogs.length > 0 ? (
-        catalogs.map((catalog, index) => (
+        catalogs.map((catalog) => (
           <CatalogCard
             key={catalog.id}
-            name={catalog.product_name}
-            description={`MRP: ${catalog.mrp}, GST: ${catalog.gst_percentage}%`}
-            asin={catalog.asin}
-            upc={catalog.upc}
-            images={catalog.images}
-            category={catalog.category}
-            onSave={() => onSave(index)}
-            onRemove={() => onRemove(index)}
+            catalog={catalog}
+            onSave={handleSubmit}
+            onRemove={onRemove}
           />
         ))
       ) : (
