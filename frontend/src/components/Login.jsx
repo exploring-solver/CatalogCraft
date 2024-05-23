@@ -66,7 +66,7 @@ function Login() {
           />
         </div>
         <Button type='submit' className="mt-6" fullWidth>
-          sign up
+         Log In
         </Button>
       </form>
     </div>
