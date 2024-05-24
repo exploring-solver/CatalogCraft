@@ -20,6 +20,7 @@ import CatalogueLateralForm from './components/Catalogues/CatalogueLateralForm';
 import MyCatalogs from './components/Catalogues/MyCatalogs';
 import UserCatalogCard from './components/Utils/UserCatalogDetails';
 import BulkData from './components/Catalogues/BulkData';
+import CatalogueAdmin from './components/CatalogueAdmin';
 import { BulkDataAddition } from './components/Catalogues/BulkDataAddition';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/catalog" element={<Home />} />
         <Route path="/my-cata" element={<MyCatalogs />} />
+        <Route path="/cata-admin" element={<CatalogueAdmin />} />
         <Route path="/catalogs" element={<Catalogs />} />
         <Route path="/product-search" element={<ProductSearch />} />
         <Route path="/catalogues/search/:query" element={<CatalogList />} />
