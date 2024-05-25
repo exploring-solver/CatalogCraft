@@ -1,7 +1,7 @@
-// CatalogueAdmin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Input, Select, Option } from '@material-tailwind/react';
+import { Button, Input } from '@material-tailwind/react';
+import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import Modal from './Modal';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -26,6 +26,7 @@ function CatalogueAdmin() {
     });
     const [modalOpen, setModalOpen] = useState(false);
     const [sortCriteria, setSortCriteria] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
 
     const token = localStorage.getItem('accessToken');
 
@@ -36,20 +37,22 @@ function CatalogueAdmin() {
 
     const fetchCatalogues = async () => {
         try {
-            const response = await axios.get(`${API_URL}/catalogue/get/`, {
+            const response = await axios.get(`${API_URL}catalogue/get-all-by-category/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setCatalogues(response.data);
+            const allCatalogues = Object.values(response.data).flat();
+            setCatalogues(allCatalogues);
         } catch (error) {
             console.error('Error fetching catalogues', error);
+            setCatalogues([]);
         }
     };
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${API_URL}/catalogue/categories/`, {
+            const response = await axios.get(`${API_URL}catalogue/categories/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -70,22 +73,24 @@ function CatalogueAdmin() {
         setCatalogueData({ ...catalogueData, [name]: checked });
     };
 
-    const handleSortChange = (e) => {
-        setSortCriteria(e.target.value);
+    const handleSortChange = (criteria) => {
+        const order = sortCriteria === criteria && sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortCriteria(criteria);
+        setSortOrder(order);
     };
-    //TODO : edit this form and handle submit to update seller catalogue details
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (catalogueData.id) {
-                await axios.put(`${API_URL}/catalogue/update-sellercatalogue/${catalogueData.id}/`, catalogueData, {
+                await axios.put(`${API_URL}catalogue/update-sellercatalogue/${catalogueData.id}/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
             } else {
-                const response = await axios.post(`${API_URL}/catalogue/create/`, catalogueData, {
+                const response = await axios.post(`${API_URL}catalogue/create/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -125,7 +130,7 @@ function CatalogueAdmin() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API_URL}/catalogue/delete-sellercatalogue/${id}/`, {
+            await axios.delete(`${API_URL}catalogue/delete-sellercatalogue/${id}/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -140,28 +145,34 @@ function CatalogueAdmin() {
         setSearchTerm(e.target.value);
     };
 
-    const filteredCatalogues = catalogues.filter((catalogue) =>
-        catalogue.product_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const getFilteredCatalogues = () => {
+        return catalogues.filter((catalogue) =>
+            catalogue.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    };
 
-    const sortedCatalogues = sortCriteria
-        ? filteredCatalogues.sort((a, b) => {
-            if (sortCriteria === 'price') {
-                return a.mrp - b.mrp;
-            } else if (sortCriteria === 'category') {
-                return a.category.localeCompare(b.category);
-            } else {
-                return 0;
-            }
-        })
-        : filteredCatalogues;
+    const getSortedCatalogues = (catalogueList) => {
+        return sortCriteria
+            ? catalogueList.sort((a, b) => {
+                if (sortCriteria === 'price') {
+                    return sortOrder === 'asc' ? parseFloat(a.mrp) - parseFloat(b.mrp) : parseFloat(b.mrp) - parseFloat(a.mrp);
+                } else if (sortCriteria === 'name') {
+                    return sortOrder === 'asc' ? a.product_name.localeCompare(b.product_name) : b.product_name.localeCompare(a.product_name);
+                } else {
+                    return 0;
+                }
+            })
+            : catalogueList;
+    };
+
+    const sortedCatalogues = getSortedCatalogues(getFilteredCatalogues());
 
     return (
-        <div className="p-4 ">
+        <div className="p-4">
             <h1 className="text-4xl font-bold my-4 text-center">Catalogue Admin</h1>
-            <div className="flex justify-around items-center mb-4 flex-col gap-5">
-                <div className='flex gap-5 w-[90%] m-auto'>
-                    <div>
+            <div className="flex mb-4 flex-col gap-5">
+                <div className='flex gap-5'>
+                    <div className="flex-grow">
                         <Input
                             label='Search Catalogues'
                             id='searchbar'
@@ -169,26 +180,10 @@ function CatalogueAdmin() {
                             placeholder="Search Catalogues"
                             value={searchTerm}
                             onChange={handleSearch}
-                            className="border p-2 border-black rounded-xl"
+                            className="border p-2 border-black rounded-xl w-full"
                         />
                     </div>
-                    <a href="">
-                        
-                    </a>
-                    <Button
-                    >
-                        Add Catalogue
-                    </Button>
-
                 </div>
-                <Select
-                    value={sortCriteria}
-                    label='Sort by'
-                    onChange={handleSortChange}
-                >
-                    <Option value="price">Price</Option>
-                    <Option value="category">Category</Option>
-                </Select>
             </div>
 
             <Modal
@@ -201,13 +196,17 @@ function CatalogueAdmin() {
                 categories={categories}
             />
 
-            <div className=''>
-                <h2 className="text-2xl my-4 ml-12">Catalogue List:</h2>
+            <div>
+                <h2 className="text-2xl my-4">Catalogue List:</h2>
                 <table className="min-w-full bg-white border border-gray-200">
                     <thead>
-                        <tr className=''>
-                            <th className="py-2 text-start px-4 border-b border-gray-200">Name</th>
-                            <th className="py-2 text-start px-4 border-b border-gray-200">MRP</th>
+                        <tr>
+                            <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('name')}>
+                                Name {sortCriteria === 'name' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                            </th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('price')}>
+                                MRP {sortCriteria === 'price' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                            </th>
                             <th className="py-2 text-start px-4 border-b border-gray-200">GST Percentage</th>
                             <th className="py-2 text-start px-4 border-b border-gray-200">CSIN</th>
                             <th className="py-2 text-start px-4 border-b border-gray-200">EAN</th>
