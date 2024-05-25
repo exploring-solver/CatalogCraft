@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CatalogImageInput from './CatalogImageInput';
-import { Button, Input } from '@material-tailwind/react';
+import { Button, Input, Textarea } from '@material-tailwind/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 function AddCatalogue() {
@@ -13,18 +13,20 @@ function AddCatalogue() {
   };
   const [formData, setFormData] = useState({
     product_name: '',
+    description: '',
     mrp: '',
-    selling_prize: '',
-    asin: '',
+    selling_price: '',
+    csin: '',
     hsn_code: '',
     gst_percentage: '',
     unit: '',
     quantity: '',
-    standardized: '',
     category: '',
-    upc: '',
-    seller_sku:'',
-    mapped_to_master: '',
+    ean: '',
+    seller_sku: '',
+    color: '',
+    brand: '',
+    size: '',
     product_image_1: null,
     product_image_2: null,
     product_image_3: null,
@@ -138,17 +140,21 @@ function AddCatalogue() {
       alert('Catalogue Created Successfully!!');
       setFormData({
         product_name: '',
+        description: '',
         mrp: '',
-        selling_prize: '',
-        asin: '',
+        selling_price: '',
+        csin: '',
         hsn_code: '',
         gst_percentage: '',
         unit: '',
         quantity: '',
         standardized: '',
         category: '',
-        upc: '',
-        seller_sku:'',
+        ean: '',
+        seller_sku: '',
+        color: '',
+        brand: '',
+        size: '',
         mapped_to_master: '',
         product_image_1: null,
         product_image_2: null,
@@ -159,6 +165,7 @@ function AddCatalogue() {
       setErrorMessages({});
     } catch (error) {
       console.error('Catalogue creation error:', error);
+      alert('Error creating catalogue!!');
       if (error.response && error.response.data) {
         setErrorMessages(error.response.data);
       }
@@ -210,6 +217,19 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.product_name}</p>}
           </div>
+          <div className="form-group w-96">
+            {/* <label htmlFor="mrp" className="block text-gray-700 text-sm font-bold mb-2">MRP</label> */}
+            <Textarea
+              label='Description'
+              type="text"
+              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.description}</p>}
+          </div>
           <div className="form-group">
             {/* <label htmlFor="mrp" className="block text-gray-700 text-sm font-bold mb-2">MRP</label> */}
             <Input
@@ -224,17 +244,17 @@ function AddCatalogue() {
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.mrp}</p>}
           </div>
           <div className="form-group">
-            {/* <label htmlFor="selling_prize" className="block text-gray-700 text-sm font-bold mb-2">Selling Price</label> */}
+            {/* <label htmlFor="selling_price" className="block text-gray-700 text-sm font-bold mb-2">Selling Price</label> */}
             <Input
               label='Selling Price'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="selling_prize"
-              name="selling_prize"
-              value={formData.selling_prize}
+              id="selling_price"
+              name="selling_price"
+              value={formData.selling_price}
               onChange={handleChange}
             />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.selling_prize}</p>}
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.selling_price}</p>}
           </div>
           <div className="form-group">
             {/* <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> */}
@@ -265,28 +285,28 @@ function AddCatalogue() {
           <div className="form-group">
             {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
             <Input
-              label='ASIN'
+              label='CSIN'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="asin"
-              name="asin"
-              value={formData.asin}
+              id="csin"
+              name="csin"
+              value={formData.csin}
               onChange={handleChange}
             />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.asin}</p>}
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.csin}</p>}
           </div>
           <div className="form-group">
             {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
             <Input
-              label='UPC'
+              label='EAN'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="upc"
-              name="upc"
-              value={formData.upc}
+              id="ean"
+              name="ean"
+              value={formData.ean}
               onChange={handleChange}
             />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.upc}</p>}
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.ean}</p>}
           </div>
           <div className="form-group">
             {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
@@ -355,7 +375,7 @@ function AddCatalogue() {
           </div>
         </div>
 
-        <div className='flex flex-wrap gap-10'>
+        <div className='flex flex-wrap gap-10 mt-5'>
           <CatalogImageInput
             label="Product Image 1"
             name="product_image_1"
@@ -405,52 +425,57 @@ function AddCatalogue() {
                 }`}
             />
           </Button>
-          <br />
           {/*TODO: Info icon for each field*/}
           {/*TODO: Make it as per taxonomy and when image is uplaoded it serves the purpose*/}
           {/*PITCH: Now you would think skipping these details will actually decrease the quality of catalogue but no our cv model actually works on this and makes sure that these details are filled exact from the database.
           Humen abhi inn feilds ko khali aur optional choda h to make catalogue digitization easy but if you want you can just get them from existing records too.*/}
           <div>
             {showAdditionalDetails && (
-              <div className='flex flex-wrap gap-5 flex-'>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="mapped_to_master">
-                    Map to Master Catalogue?
-                  </label>
-                  <select
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="mapping"
-                    name="mapped_to_master"
-                    value={formData.mapped_to_master}
+              <div className='flex flex-wrap gap-5 '>
+                <div className="form-group">
+                  {/* <label htmlFor="quantity" className="block text-gray-700 text-sm font-bold mb-2">Quantity</label> */}
+                  <Input
+                    label='Color'
+                    type="text"
+                    className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="color"
+                    name="color"
+                    value={formData.color}
                     onChange={handleChange}
-                  >
-                    <option value="">Select</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                  {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.mapped_to_master}</p>}
+                  />
+                  {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.color}</p>}
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="standardized">
-                    Standardized?
-                  </label>
-                  <select
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="standardized"
-                    name="standardized"
-                    value={formData.standardized}
+                <div className="form-group">
+                  {/* <label htmlFor="quantity" className="block text-gray-700 text-sm font-bold mb-2">Quantity</label> */}
+                  <Input
+                    label='Brand'
+                    type="text"
+                    className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="brand"
+                    name="brand"
+                    value={formData.brand}
                     onChange={handleChange}
-                  >
-                    <option value="">Select</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                  {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.standardized}</p>}
+                  />
+                  {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.brand}</p>}
+                </div>
+                <div className="form-group">
+                  {/* <label htmlFor="quantity" className="block text-gray-700 text-sm font-bold mb-2">Quantity</label> */}
+                  <Input
+                    label='Size'
+                    type="text"
+                    className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="size"
+                    name="size"
+                    value={formData.size}
+                    onChange={handleChange}
+                  />
+                  {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.size}</p>}
                 </div>
               </div>
             )}
           </div>
         </div>
+        <br />
         <div className="flex items-center justify-between">
           <Button fullWidth color='green' variant='filled' type="submit">
             Add Catalogue

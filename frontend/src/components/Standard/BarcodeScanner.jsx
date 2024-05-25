@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useZxing } from "react-zxing";
 import CataContext from "../Context/Catalogue/CataContext";
-import { Button, Input } from "@material-tailwind/react";
+import {useNavigate} from 'react-router-dom'
+import { Alert, Button, Input } from "@material-tailwind/react";
 import axios from "axios";
 
 export const BarcodeScanner = () => {
@@ -13,12 +14,35 @@ export const BarcodeScanner = () => {
             setResult(result.getText());
         },
     });
+    const navigate = useNavigate();
+    useEffect(() => {
+        const handleLookup = async () => {
+            if (result) {
+                try {
+                    const response = await axios.get(`${backend_url}/catalogue/lookup/${result}/`);
+                    console.log('Lookup response:', response.data);
+                    setResult(' ');
+                    setSearchedCatalog(response.data)
+                    navigate('/lateral')
+                    // Assuming you want to do something with the response data
+                } catch (error) {
+                    if (error.response && error.response.status === 400) {
+                        console.log('Product EAN not found');
+                    } else {
+                        console.error('Error looking up product:', error);
+                    }
+                }
+            }
+        };
+
+        handleLookup();
+    }, [result]);
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`${backend_url}/catalogue/search-catalogues/?query=${result}`);
+            const response = await axios.get(`${backend_url}/catalogue/search-catalogues/?query=${result}/`);
             console.log('Search response:', response.data);
-            setSearchResults(response.data); // Set the search results to the context
+            setSearchedCatalog(response.data);
         } catch (error) {
             console.error('Error searching catalogues:', error);
         }
@@ -26,12 +50,7 @@ export const BarcodeScanner = () => {
 
     return (
         <>
-            {!result &&
-            <video ref={ref} />}
-            {/* <p>
-                <span>Last result:</span>
-                <span>{result}</span>
-            </p> */}
+            {!result && <video ref={ref} />}
             <Input placeholder="UPC Number" label="UPC Number" type="text" value={result} readOnly className="product-search-input !text-black" />
             <Button variant="filled" onClick={handleSearch}>Submit</Button>
         </>

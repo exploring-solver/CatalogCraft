@@ -3,7 +3,7 @@ import { Button } from '@material-tailwind/react';
 
 export function TopNavigator({ setCurrentSection }) {
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-4 flex-wrap gap-4">
       <Button
         color="blue"
         variant="filled"

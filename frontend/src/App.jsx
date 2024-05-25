@@ -22,6 +22,7 @@ import UserCatalogCard from './components/Utils/UserCatalogDetails';
 import BulkData from './components/Catalogues/BulkData';
 import CatalogueAdmin from './components/CatalogueAdmin';
 import { BulkDataAddition } from './components/Catalogues/BulkDataAddition';
+import CatalogQuickLateralForm from './components/Catalogues/CatalogQuickLateral';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/lateral" element={<CatalogueLateralForm />} />
+        <Route path="/instant-lateral" element={<CatalogQuickLateralForm />} />
         <Route path="/add-catalog" element={<AddCatalogue />} />
         <Route path="/bulk-data" element={<BulkData />} />
         <Route path="/bulk-data-show" element={<BulkDataAddition />} />

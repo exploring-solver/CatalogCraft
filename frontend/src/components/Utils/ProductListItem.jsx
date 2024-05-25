@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useNavigate } from 'react-router-dom';
 import CatalogDetailsPage from './CatalogDetailsPage';
 import CatalogForm from './CatalogForm';
 
@@ -7,7 +7,7 @@ const ProductListItem = ({ product }) => {
   const { image, name, description, ASIN, EAN, UPC, category } = product;
   const [catalogType, setCatalogType] = useState('');
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleCatalogTypeChange = (event) => {
     setCatalogType(event.target.value);
@@ -16,7 +16,12 @@ const ProductListItem = ({ product }) => {
 
   const handleCreateCatalog = () => {
     if (isButtonEnabled) {
-      history.push(`/catalog-details/${name}`);
+      navigate(`/catalog-details/${name}`);
+    }
+  };
+  const handleInstantCreateCatalog = () => {
+    if (isButtonEnabled) {
+      navigate(`/catalog-details/${name}`);
     }
   };
 
@@ -61,6 +66,14 @@ const ProductListItem = ({ product }) => {
             onClick={handleCreateCatalog}
           >
             Create Catalog
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!isButtonEnabled}
+            onClick={handleInstantCreateCatalog}
+          >
+            Quick Create
           </Button>
         </Box>
       </CardContent>

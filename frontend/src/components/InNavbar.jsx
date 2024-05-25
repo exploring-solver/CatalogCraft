@@ -30,8 +30,6 @@ import AuthContext from "./Context/Auth/AuthContext";
 import Translator from "./Translator";
 import { NavLink } from "react-router-dom";
 
-
-
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const closeMenu = () => setIsMenuOpen(false);
@@ -72,7 +70,7 @@ function ProfileMenu() {
       to: '/logout'
     },
   ];
-
+  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -176,7 +174,9 @@ function NavList() {
             <span className="text-gray-900"> {label}</span>
           </MenuItem>
         </Typography>
+
       ))}
+
     </ul>
   );
 }
@@ -205,11 +205,10 @@ export function ComplexNavbar() {
         >
           CatalogCraft
         </Typography>
+        <Translator />
         <div className="hidden lg:block">
           <NavList />
-
         </div>
-        <Translator />
         <IconButton
           size="sm"
           color="blue-gray"

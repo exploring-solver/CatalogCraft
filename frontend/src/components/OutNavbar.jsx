@@ -18,16 +18,13 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
-  Bars4Icon,
   GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
   SquaresPlusIcon,
   SunIcon,
   TagIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+// import Translator from "./Translator";
 
 const navListMenuItems = [
   {
@@ -40,11 +37,11 @@ const navListMenuItems = [
     description: "Meet and learn about our dedication",
     icon: UserGroupIcon,
   },
-  {
-    title: "Blog",
-    description: "Find the perfect solution for your needs.",
-    icon: Bars4Icon,
-  },
+  // {
+  //   title: "Blog",
+  //   description: "Find the perfect solution for your needs.",
+  //   icon: Bars4Icon,
+  // },
   {
     title: "Services",
     description: "Learn how we can help you achieve your goals.",
@@ -55,21 +52,21 @@ const navListMenuItems = [
     description: "Reach out to us for assistance or inquiries",
     icon: GlobeAmericasIcon,
   },
-  {
-    title: "Contact",
-    description: "Find the perfect solution for your needs.",
-    icon: PhoneIcon,
-  },
-  {
-    title: "News",
-    description: "Read insightful articles, tips, and expert opinions.",
-    icon: NewspaperIcon,
-  },
-  {
-    title: "Products",
-    description: "Find the perfect solution for your needs.",
-    icon: RectangleGroupIcon,
-  },
+  // {
+  //   title: "Contact",
+  //   description: "Find the perfect solution for your needs.",
+  //   icon: PhoneIcon,
+  // },
+  // {
+  //   title: "News",
+  //   description: "Read insightful articles, tips, and expert opinions.",
+  //   icon: NewspaperIcon,
+  // },
+  // {
+  //   title: "Products",
+  //   description: "Find the perfect solution for your needs.",
+  //   icon: RectangleGroupIcon,
+  // },
   {
     title: "Help",
     description: "Know more about the app",
@@ -176,17 +173,18 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <div className="flex">
-        <a href="/help">
-          <ListItem className="py-2 pr-4">
-            Help
-          </ListItem>
-        </a>
-        <a href="http://panel.mait.ac.in:8012/media/images/CatalogCraft.apk">
-          <ListItem className="py-2 pr-4">
-            Download App
-          </ListItem>
-        </a></div>
+        <div className="flex items-center">
+          <a href="/help">
+            <ListItem className="py-2 pr-4">
+              Help
+            </ListItem>
+          </a>
+          <a href="http://panel.mait.ac.in:8012/media/images/CatalogCraft.apk">
+            <ListItem className="py-2 pr-4">
+              Download App
+            </ListItem>
+          </a>
+        </div>
       </Typography>
     </List>
   );

@@ -21,6 +21,12 @@ const ProductListItem = ({ catalog }) => {
     navigate("/lateral")
   };
 
+  const handleInstantCreateCatalog = () => {
+    if (isButtonEnabled) {
+      navigate(`/instant-lateral`);
+    }
+  };
+
   return (
     <Card className="flex flex-row items-center px-4 py-2 m-4 shadow-lg justify-between max-w-5xl ">
       <img
@@ -29,7 +35,7 @@ const ProductListItem = ({ catalog }) => {
         alt={product_name}
         className="w-24 object-fit border-[1px] bg-gray-200 shadow border-black p-2"
       />
-      <CardContent className="flex ml-4 items-center gap-3">
+      <CardContent className="flex ml-4 items-center gap-3 ">
         <div className=''>
           <Typography variant="h6" className="font-medium">
             {product_name}
@@ -59,14 +65,26 @@ const ProductListItem = ({ catalog }) => {
                 <MenuItem value="old">Old</MenuItem>
               </Select>
             </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={!isButtonEnabled}
-              onClick={handleCreateCatalog}
-            >
-              Create Catalog
-            </Button>
+            <div className='flex gap-3 flex-wrap md:flex-nowrap'>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!isButtonEnabled}
+                className='!text-sm'
+                onClick={handleCreateCatalog}
+              >
+                Create Catalog
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!isButtonEnabled}
+                className='!text-sm'
+                onClick={handleInstantCreateCatalog}
+              >
+                Quick Create
+              </Button>
+            </div>
           </Box>
         </div>
       </CardContent>

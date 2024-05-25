@@ -117,7 +117,7 @@ const ProductSearch = () => {
   return (
     <div className='bg-orange-50 flex justify-center items-center'>
       <div className="product-search-container ">
-        <img src={banner} className='m-auto w-full max-w-[400px] h-auto' alt="" />
+        <img src={banner} className='m-auto w-full max-w-[300px] md:max-w-[400px] h-auto' alt="" />
         <br />
         <Typography variant='h3' className='text-center !text-2xl md:!text-xl'>Find your products in the CatalogCraft's catalog</Typography>
         <br />

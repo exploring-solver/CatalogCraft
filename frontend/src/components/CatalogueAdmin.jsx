@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, Input, Select, Option } from '@material-tailwind/react';
 import Modal from './Modal';
 
-const API_URL = 'http://panel.mait.ac.in:8012';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function CatalogueAdmin() {
     const [catalogues, setCatalogues] = useState([]);
@@ -36,7 +36,7 @@ function CatalogueAdmin() {
 
     const fetchCatalogues = async () => {
         try {
-            const response = await axios.get(`${API_URL}/catalogue/get-all/`, {
+            const response = await axios.get(`${API_URL}/catalogue/get/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -73,7 +73,7 @@ function CatalogueAdmin() {
     const handleSortChange = (e) => {
         setSortCriteria(e.target.value);
     };
-
+    //TODO : edit this form and handle submit to update seller catalogue details
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -157,27 +157,30 @@ function CatalogueAdmin() {
         : filteredCatalogues;
 
     return (
-        <div className="p-4">
+        <div className="p-4 ">
             <h1 className="text-4xl font-bold my-4 text-center">Catalogue Admin</h1>
+            <div className="flex justify-around items-center mb-4 flex-col gap-5">
+                <div className='flex gap-5 w-[90%] m-auto'>
+                    <div>
+                        <Input
+                            label='Search Catalogues'
+                            id='searchbar'
+                            type="text"
+                            placeholder="Search Catalogues"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            className="border p-2 border-black rounded-xl"
+                        />
+                    </div>
+                    <a href="">
+                        
+                    </a>
+                    <Button
+                    >
+                        Add Catalogue
+                    </Button>
 
-            <div className="flex justify-around items-center mb-4">
-                <div>
-                    <Input
-                        label='Search Catalogues'
-                        id='searchbar'
-                        type="text"
-                        placeholder="Search Catalogues"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        className="border p-2 border-black rounded-xl"
-                    />
                 </div>
-                <Button
-                    variant='filled'
-                    onClick={() => setModalOpen(true)}
-                >
-                    Add Catalogue
-                </Button>
                 <Select
                     value={sortCriteria}
                     label='Sort by'
@@ -198,30 +201,30 @@ function CatalogueAdmin() {
                 categories={categories}
             />
 
-            <div>
+            <div className=''>
                 <h2 className="text-2xl my-4 ml-12">Catalogue List:</h2>
-                <table className="min-w-full bg-white">
+                <table className="min-w-full bg-white border border-gray-200">
                     <thead>
-                        <tr>
-                            <th className="py-2">Name</th>
-                            <th className="py-2">MRP</th>
-                            <th className="py-2">GST Percentage</th>
-                            <th className="py-2">ASIN</th>
-                            <th className="py-2">UPC</th>
-                            <th className="py-2">Category</th>
-                            <th className="py-2">Actions</th>
+                        <tr className=''>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">Name</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">MRP</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">GST Percentage</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">CSIN</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">EAN</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">Category</th>
+                            <th className="py-2 text-start px-4 border-b border-gray-200">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedCatalogues.map((catalogue) => (
-                            <tr key={catalogue.id} className="border-t">
+                        {sortedCatalogues.map((catalogue, index) => (
+                            <tr key={catalogue.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} border-t border-gray-200`}>
                                 <td className="py-2 px-4">{catalogue.product_name}</td>
                                 <td className="py-2 px-4">{catalogue.mrp}</td>
                                 <td className="py-2 px-4">{catalogue.gst_percentage}</td>
-                                <td className="py-2 px-4">{catalogue.asin}</td>
-                                <td className="py-2 px-4">{catalogue.upc}</td>
+                                <td className="py-2 px-4">{catalogue.csin}</td>
+                                <td className="py-2 px-4">{catalogue.ean}</td>
                                 <td className="py-2 px-4">{catalogue.category}</td>
-                                <td className="py-2 px-4 flex space-x-2">
+                                <td className="py-2 px-4 flex gap-2 flex-wrap">
                                     <Button
                                         color='amber'
                                         onClick={() => handleEdit(catalogue)}
