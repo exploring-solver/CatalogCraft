@@ -39,7 +39,7 @@ function CatalogueAdmin() {
 
     const fetchCatalogues = async () => {
         try {
-            const response = await axios.get(`${API_URL}catalogue/get-all-by-category/`, {
+            const response = await axios.get(`${API_URL}/catalogue/get-all-by-category/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -54,7 +54,7 @@ function CatalogueAdmin() {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${API_URL}catalogue/categories/`, {
+            const response = await axios.get(`${API_URL}/catalogue/categories/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -85,14 +85,14 @@ function CatalogueAdmin() {
         e.preventDefault();
         try {
             if (catalogueData.id) {
-                await axios.put(`${API_URL}catalogue/update-sellercatalogue/${catalogueData.id}/`, catalogueData, {
+                await axios.put(`${API_URL}/catalogue/update-sellercatalogue/${catalogueData.id}/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
             } else {
-                const response = await axios.post(`${API_URL}catalogue/create/`, catalogueData, {
+                const response = await axios.post(`${API_URL}/catalogue/create/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ function CatalogueAdmin() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API_URL}catalogue/delete-sellercatalogue/${id}/`, {
+            await axios.delete(`${API_URL}/catalogue/delete-sellercatalogue/${id}/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -141,7 +141,7 @@ function CatalogueAdmin() {
         } catch (error) {
             console.error('Error deleting catalogue', error);
         }
-    };
+    };    
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);

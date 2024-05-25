@@ -1,8 +1,7 @@
 import React from 'react';
-import { Input, Checkbox, Button, Select, Option } from '@material-tailwind/react';
+import { Input, Checkbox, Button } from '@material-tailwind/react';
 
 function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, handleCheckboxChange, categories }) {
-    // console.log(categories)
     if (!isOpen) return null;
     const backend_url = import.meta.env.VITE_BACKEND_URL;
     const categoryOptions = Array.isArray(categories) ? categories.map(category => ({ value: category, label: category })) : [];
@@ -15,12 +14,13 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
                     <div className="flex gap-2">
                         {[1, 2, 3, 4, 5].map((index) => {
                             const imageKey = `product_image_${index}`;
-                            const imageUrl = catalogueData[imageKey];
+                            const imageUrl = `${backend_url}${catalogueData[imageKey]}`;
+                            console.log(imageUrl)
                             if (imageUrl) {
                                 return (
                                     <img
                                         key={index}
-                                        src={`${backend_url}${imageUrl}`}
+                                        src={`${backend_url}${catalogueData[imageKey]}`}
                                         alt={`Preview ${index}`}
                                         className="h-16 w-16 object-cover border-2 border-gray-600"
                                     />
@@ -28,9 +28,6 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
                             }
                             return null;
                         })}
-                    </div>
-                    <div>
-
                     </div>
                     <Input
                         label='Product Name'
@@ -77,7 +74,6 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-
                     <Checkbox
                         name="standardized"
                         label="Standardized"
