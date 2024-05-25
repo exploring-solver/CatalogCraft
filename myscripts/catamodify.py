@@ -34,13 +34,14 @@ for path_tuple in image_paths:
         text = "A"
         font = ImageFont.load_default()
 
+        # Calculate the text size using font.getsize
+        # text_width, text_height = font.getlength
+
         # Calculate the position for the text (bottom half)
-        text_width, text_height = draw.text(text=text, font=font,xy=0)
-        position = ((width - text_width) // 2, (height + text_height) // 2)
+        # position = ((width - text_width) // 2, (height + text_height) // 2)
 
         # Draw the text on the image
-        draw.text(position, text, font=font, fill="white")
-
+        draw.text((5, 5), text, font=font, fill="white", align ="right")
         # Save the modified image with the new extension if necessary
         new_path = image_path
         if image_path.endswith(".jpg"):

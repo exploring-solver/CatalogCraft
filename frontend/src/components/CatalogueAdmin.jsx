@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Button, Input } from '@material-tailwind/react';
 
 const API_URL = 'https://panel.mait.ac.in:8012/catalogues/';
 
@@ -124,7 +125,8 @@ function CatalogueAdmin() {
             <div className="flex justify-around items-center mb-4">
                 <div>
                     <label htmlFor="searchbar" className='text-xl'>Search: </label>
-                    <input
+                    <Input
+                        label= 'Search Catalogues'
                         id='searchbar'
                         type="text"
                         placeholder="Search Catalogues"
