@@ -27,7 +27,9 @@ function CatalogueAdmin() {
     const [modalOpen, setModalOpen] = useState(false);
     const [sortCriteria, setSortCriteria] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const itemsPerPage = 5;
     const token = localStorage.getItem('accessToken');
 
     useEffect(() => {
@@ -165,7 +167,13 @@ function CatalogueAdmin() {
             : catalogueList;
     };
 
+    const getPaginatedCatalogues = (catalogueList) => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return catalogueList.slice(startIndex, startIndex + itemsPerPage);
+    };
+
     const sortedCatalogues = getSortedCatalogues(getFilteredCatalogues());
+    const paginatedCatalogues = getPaginatedCatalogues(sortedCatalogues);
 
     return (
         <div className="p-4">
@@ -215,7 +223,7 @@ function CatalogueAdmin() {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedCatalogues.map((catalogue, index) => (
+                        {paginatedCatalogues.map((catalogue, index) => (
                             <tr key={catalogue.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} border-t border-gray-200`}>
                                 <td className="py-2 px-4">{catalogue.product_name}</td>
                                 <td className="py-2 px-4">{catalogue.mrp}</td>
@@ -241,6 +249,23 @@ function CatalogueAdmin() {
                         ))}
                     </tbody>
                 </table>
+                <div className="flex justify-between mt-4">
+                    <Button
+                        color='blue-gray'
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </Button>
+                    <span className='border-2 border-black rounded-full p-2 font-semibold'>Page {currentPage}</span>
+                    <Button
+                        color='blue-gray'
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage * itemsPerPage >= sortedCatalogues.length}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
         </div>
     );
