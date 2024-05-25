@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Input } from '@material-tailwind/react';
+import { Button, Input, Checkbox } from '@material-tailwind/react';
 
-const API_URL = 'https://panel.mait.ac.in:8012/catalogues/';
+const API_URL = 'http://panel.mait.ac.in:8012';
 
 function CatalogueAdmin() {
     const [catalogues, setCatalogues] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [catalogueData, setCatalogueData] = useState({
-        name: '',
+        product_name: '',
         mrp: '',
-        gstPercentage: '',
+        gst_percentage: '',
         asin: '',
         upc: '',
-        productImage1: '',
-        productImage2: '',
-        productImage3: '',
-        productImage4: '',
-        productImage5: '',
+        product_image_1: '',
+        product_image_2: '',
+        product_image_3: '',
+        product_image_4: '',
+        product_image_5: '',
         standardized: false,
-        category: ''
+        category: 'Electronics'
     });
     const [modalOpen, setModalOpen] = useState(false);
 
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('accessToken');
 
     useEffect(() => {
         fetchCatalogues();
@@ -31,12 +31,13 @@ function CatalogueAdmin() {
 
     const fetchCatalogues = async () => {
         try {
-            const response = await axios.get(API_URL, {
+            const response = await axios.get(`${API_URL}/catalogue/get-all-by-category/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setCatalogues(response.data);
+            const electronicsCatalogues = response.data.Electronics || [];
+            setCatalogues(electronicsCatalogues);
         } catch (error) {
             console.error('Error fetching catalogues', error);
         }
@@ -56,14 +57,14 @@ function CatalogueAdmin() {
         e.preventDefault();
         try {
             if (catalogueData.id) {
-                await axios.put(`${API_URL}${catalogueData.id}/`, catalogueData, {
+                await axios.put(`${API_URL}/catalogue/update-sellercatalogue/${catalogueData.id}/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
             } else {
-                const response = await axios.post(API_URL, catalogueData, {
+                const response = await axios.post(`${API_URL}/catalogue/create/`, catalogueData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -72,18 +73,18 @@ function CatalogueAdmin() {
                 setCatalogues([...catalogues, response.data]);
             }
             setCatalogueData({
-                name: '',
+                product_name: '',
                 mrp: '',
-                gstPercentage: '',
+                gst_percentage: '',
                 asin: '',
                 upc: '',
-                productImage1: '',
-                productImage2: '',
-                productImage3: '',
-                productImage4: '',
-                productImage5: '',
+                product_image_1: '',
+                product_image_2: '',
+                product_image_3: '',
+                product_image_4: '',
+                product_image_5: '',
                 standardized: false,
-                category: ''
+                category: 'Electronics'
             });
             setModalOpen(false);
             fetchCatalogues();
@@ -99,7 +100,7 @@ function CatalogueAdmin() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API_URL}${id}/`, {
+            await axios.delete(`${API_URL}/catalogue/delete-sellercatalogue/${id}/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -114,9 +115,11 @@ function CatalogueAdmin() {
         setSearchTerm(e.target.value);
     };
 
-    const filteredCatalogues = catalogues.filter((catalogue) =>
-        catalogue.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredCatalogues = Array.isArray(catalogues)
+        ? catalogues.filter((catalogue) =>
+            catalogue.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        : [];
 
     return (
         <div className="p-4">
@@ -124,9 +127,8 @@ function CatalogueAdmin() {
 
             <div className="flex justify-around items-center mb-4">
                 <div>
-                    <label htmlFor="searchbar" className='text-xl'>Search: </label>
                     <Input
-                        label= 'Search Catalogues'
+                        label='Search Catalogues'
                         id='searchbar'
                         type="text"
                         placeholder="Search Catalogues"
@@ -135,12 +137,13 @@ function CatalogueAdmin() {
                         className="border p-2 border-black rounded-xl"
                     />
                 </div>
-                <button
+                <Button
+                    variant='filled'
                     onClick={() => setModalOpen(true)}
-                    className="bg-green-500 text-white p-2 rounded"
+                // className="bg-green-500 text-white p-2 rounded"
                 >
                     Add Catalogue
-                </button>
+                </Button>
             </div>
 
             <Modal
@@ -169,25 +172,27 @@ function CatalogueAdmin() {
                     <tbody>
                         {filteredCatalogues.map((catalogue) => (
                             <tr key={catalogue.id} className="border-t">
-                                <td className="py-2 px-4">{catalogue.name}</td>
+                                <td className="py-2 px-4">{catalogue.product_name}</td>
                                 <td className="py-2 px-4">{catalogue.mrp}</td>
-                                <td className="py-2 px-4">{catalogue.gstPercentage}</td>
+                                <td className="py-2 px-4">{catalogue.gst_percentage}</td>
                                 <td className="py-2 px-4">{catalogue.asin}</td>
                                 <td className="py-2 px-4">{catalogue.upc}</td>
                                 <td className="py-2 px-4">{catalogue.category}</td>
                                 <td className="py-2 px-4 flex space-x-2">
-                                    <button
+                                    <Button
+                                        color='amber'
                                         onClick={() => handleEdit(catalogue)}
-                                        className="bg-yellow-500 text-white p-2 rounded"
+                                    // className="bg-yellow-500 text-white p-2 rounded"
                                     >
                                         Edit
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
+                                        color='red'
                                         onClick={() => handleDelete(catalogue.id)}
-                                        className="bg-red-500 text-white p-2 rounded"
+                                        // className="bg-red-500 text-white p-2 rounded"
                                     >
                                         Delete
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
                         ))}
@@ -200,7 +205,6 @@ function CatalogueAdmin() {
 
 export default CatalogueAdmin;
 
-
 function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, handleCheckboxChange }) {
     if (!isOpen) return null;
 
@@ -209,15 +213,17 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
             <div className="bg-white p-6 rounded-lg w-1/2">
                 <h2 className="text-xl mb-4">{catalogueData.id ? 'Edit Catalogue' : 'Add New Catalogue'}</h2>
                 <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4">
-                    <input
+                    <Input
+                    label='Product Name'
                         type="text"
-                        name="name"
+                        name="product_name"
                         placeholder="Product Name"
-                        value={catalogueData.name}
+                        value={catalogueData.product_name}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
+                    label='MRP'
                         type="text"
                         name="mrp"
                         placeholder="MRP"
@@ -225,95 +231,113 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="gstPercentage"
+                        name="gst_percentage"
                         placeholder="GST Percentage"
-                        value={catalogueData.gstPercentage}
+                        label="GST Percentage"
+                        value={catalogueData.gst_percentage}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
                         name="asin"
                         placeholder="ASIN"
+                        label="ASIN"
                         value={catalogueData.asin}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
                         name="upc"
                         placeholder="UPC"
+                        label="UPC"
                         value={catalogueData.upc}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="productImage1"
+                        name="product_image_1"
                         placeholder="Product Image 1"
-                        value={catalogueData.productImage1}
+                        label="Product Image 1"
+                        value={catalogueData.product_image_1}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="productImage2"
+                        name="product_image_2"
                         placeholder="Product Image 2"
-                        value={catalogueData.productImage2}
+                        label="Product Image 2"
+                        value={catalogueData.product_image_2}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="productImage3"
+                        name="product_image_3"
                         placeholder="Product Image 3"
-                        value={catalogueData.productImage3}
+                        label="Product Image 3"
+                        value={catalogueData.product_image_3}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="productImage4"
+                        name="product_image_4"
                         placeholder="Product Image 4"
-                        value={catalogueData.productImage4}
+                        label="Product Image 4"
+                        value={catalogueData.product_image_4}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <input
+                    <Input
                         type="text"
-                        name="productImage5"
+                        name="product_image_5"
                         placeholder="Product Image 5"
-                        value={catalogueData.productImage5}
+                        label="Product Image 5"
+                        value={catalogueData.product_image_5}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
                     <div className="flex items-center">
-                        <input
+                        <Checkbox
                             type="checkbox"
                             name="standardized"
+                            label="Standardized"
                             checked={catalogueData.standardized}
                             onChange={handleCheckboxChange}
-                            className="mr-2"
+                            // className="mr-2"
                         />
-                        <label>Standardized</label>
+                        {/* <label>Standardized</label> */}
                     </div>
-                    <input
+                    <Input
                         type="text"
                         name="category"
                         placeholder="Category"
+                        label="Category"
                         value={catalogueData.category}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
-                    <div className="col-span-2 flex justify-end">
-                        <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded mr-2">
+                    <div className="col-span-2 flex justify-end gap-5">
+                        <Button
+                            variant='outlined'
+                            type="button" onClick={onClose}
+                            // className="bg-gray-500 text-white p-2 rounded mr-2"
+                        >
                             Cancel
-                        </button>
-                        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+                        </Button>
+                        <Button
+                            variant='gradient'
+                            type="submit"
+                        // className="bg-blue-500 text-white p-2 rounded"
+                        >
                             {catalogueData.id ? 'Update' : 'Create'}
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

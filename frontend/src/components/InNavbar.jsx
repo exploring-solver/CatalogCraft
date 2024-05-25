@@ -23,6 +23,7 @@ import {
   PowerIcon,
   Bars2Icon,
   ChartBarSquareIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import AuthContext from "./Context/Auth/AuthContext";
@@ -150,11 +151,16 @@ const navListItems = [
     icon: CodeBracketSquareIcon,
     to: "/product-search"
   },
+  {
+    label: "Manage Catalog",
+    icon: BuildingLibraryIcon,
+    to: "/cata-admin"
+  },
 ];
 
 function NavList() {
   return (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+    <ul className="mt-2 mr-5 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {/* <NavListMenu /> */}
       {navListItems.map(({ label, icon, to }, key) => (
         <Typography
