@@ -31,6 +31,7 @@ function CatalogueAdmin() {
 
     const itemsPerPage = 5;
     const token = localStorage.getItem('accessToken');
+    // console.log(token);
 
     useEffect(() => {
         fetchCatalogues();
@@ -39,7 +40,7 @@ function CatalogueAdmin() {
 
     const fetchCatalogues = async () => {
         try {
-            const response = await axios.get(`${API_URL}/catalogue/get-all-by-category/`, {
+            const response = await axios.get(`${API_URL}/catalogue/get-all/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -188,7 +189,7 @@ function CatalogueAdmin() {
                             placeholder="Search Catalogues"
                             value={searchTerm}
                             onChange={handleSearch}
-                            className="border p-2 border-black rounded-xl w-full"
+                            // className="border p-2 border-black rounded-xl w-full"
                         />
                     </div>
                 </div>
