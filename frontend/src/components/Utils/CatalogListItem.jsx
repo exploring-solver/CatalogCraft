@@ -4,7 +4,7 @@ import CatalogDetailsPage from './CatalogDetailsPage';
 import CatalogForm from './CatalogForm';
 
 const CatalogListItem = ({ product }) => {
-  const { image, name, description, ASIN, EAN, UPC, category } = product;
+  const { image, name, description, CSIN, EAN, EAN, category } = product;
   const [catalogType, setCatalogType] = useState('');
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const history = useHistory();
@@ -35,9 +35,9 @@ const CatalogListItem = ({ product }) => {
           {description}
         </Typography>
         <Box className="mt-2 flex flex-wrap gap-5">
-          <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>ASIN:</strong> {ASIN}</Typography>
+          <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>CSIN:</strong> {CSIN}</Typography>
           <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>EAN:</strong> {EAN}</Typography>
-          <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>UPC:</strong> {UPC}</Typography>
+          <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>EAN:</strong> {EAN}</Typography>
           <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>Category:</strong> {category}</Typography>
         </Box>
         <Box className="flex flex-col gap-4 mr-4">

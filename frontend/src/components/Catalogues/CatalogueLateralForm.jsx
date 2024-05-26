@@ -30,8 +30,8 @@ const CatalogueLateralForm = () => {
     product_name: searchedCatalog.product_name || '',
     mrp: searchedCatalog.mrp || '',
     gst_percentage: searchedCatalog.gst_percentage || '',
-    asin: searchedCatalog.asin || '',
-    upc: searchedCatalog.upc || '',
+    csin: searchedCatalog.csin || '',
+    ean: searchedCatalog.ean || '',
     category: searchedCatalog.category || '',
   });
   const [errorMessages, setErrorMessages] = useState({});
@@ -46,8 +46,8 @@ const CatalogueLateralForm = () => {
         product_name: searchedCatalog.product_name,
         mrp: searchedCatalog.mrp,
         gst_percentage: searchedCatalog.gst_percentage,
-        asin: searchedCatalog.asin,
-        upc: searchedCatalog.upc,
+        csin: searchedCatalog.csin,
+        ean: searchedCatalog.ean,
         category: searchedCatalog.category,
       }));
     }
@@ -102,8 +102,8 @@ const CatalogueLateralForm = () => {
         product_name: searchedCatalog.product_name || '',
         mrp: searchedCatalog.mrp || '',
         gst_percentage: searchedCatalog.gst_percentage || '',
-        asin: searchedCatalog.asin || '',
-        upc: searchedCatalog.upc || '',
+        csin: searchedCatalog.csin || '',
+        ean: searchedCatalog.ean || '',
         category: searchedCatalog.category || '',
       });
       setErrorMessages({});
@@ -147,10 +147,10 @@ const CatalogueLateralForm = () => {
           <Typography className="mb-4">₹{searchedCatalog.mrp}</Typography>
           <Typography variant="h6" className="mb-2">GST Percentage</Typography>
           <Typography className="mb-4">{searchedCatalog.gst_percentage}%</Typography>
-          <Typography variant="h6" className="mb-2">ASIN</Typography>
-          <Typography className="mb-4">{searchedCatalog.asin}</Typography>
-          <Typography variant="h6" className="mb-2">UPC</Typography>
-          <Typography className="mb-4">{searchedCatalog.upc}</Typography>
+          <Typography variant="h6" className="mb-2">CSIN</Typography>
+          <Typography className="mb-4">{searchedCatalog.csin}</Typography>
+          <Typography variant="h6" className="mb-2">EAN</Typography>
+          <Typography className="mb-4">{searchedCatalog.ean}</Typography>
           <Typography variant="h6" className="mb-2">Category</Typography>
           <Typography className="mb-4">{searchedCatalog.category}</Typography>
         </div>

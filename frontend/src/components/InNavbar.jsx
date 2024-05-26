@@ -70,7 +70,7 @@ function ProfileMenu() {
       to: '/logout'
     },
   ];
-  
+
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -204,8 +204,8 @@ export function ComplexNavbar() {
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
         >
           CatalogCraft
+          <Translator />
         </Typography>
-        <Translator />
         <div className="hidden lg:block">
           <NavList />
         </div>

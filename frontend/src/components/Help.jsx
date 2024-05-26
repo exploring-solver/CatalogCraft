@@ -113,7 +113,7 @@ function Help() {
         <section id="my-catalog" className="mb-8">
           <h2 className="text-xl font-semibold mb-4">My Catalog</h2>
           <p>
-            View and manage your catalogs. Scan UPC barcodes to see products in the database.
+            View and manage your catalogs. Scan EAN barcodes to see products in the database.
           </p>
         </section>
       </div>

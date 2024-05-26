@@ -4,9 +4,12 @@ import CataContext from '../Context/Catalogue/CataContext';
 import { useNavigate } from 'react-router-dom';
 
 const ProductListItem = ({ catalog }) => {
-  const { product_image_1, product_name, mrp, gst_percentage, asin, upc, category } = catalog;
+  const { product_image_1, product_name, mrp, gst_percentage, csin, ean, category } = catalog;
   const [catalogType, setCatalogType] = useState('');
-  const { searchedCatalog, setSearchedCatalog } = useContext(CataContext);
+  const searchedCatalog = JSON.parse(localStorage.getItem('searchedCatalog')) || {};
+  const setSearchedCatalog = (catalog) => {
+    localStorage.setItem('searchedCatalog', JSON.stringify(catalog));
+  };
   const navigate = useNavigate();
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -23,6 +26,7 @@ const ProductListItem = ({ catalog }) => {
 
   const handleInstantCreateCatalog = () => {
     if (isButtonEnabled) {
+      localStorage.setItem('searchedCatalog', JSON.stringify(catalog));
       navigate(`/instant-lateral`);
     }
   };
@@ -46,8 +50,8 @@ const ProductListItem = ({ catalog }) => {
         </div>
         <div className='flex items-center gap-2'>
           <Box className="mt-2 flex gap-5 flex-wrap">
-            <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>ASIN:</strong> {asin}</Typography>
-            <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>UPC:</strong> {upc}</Typography>
+            <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>CSIN:</strong> {csin}</Typography>
+            <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>EAN:</strong> {ean}</Typography>
             <Typography variant="body2" className="mr-4"><strong className='text-yellow-900'>Category:</strong> {category}</Typography>
           </Box>
           <Box className="flex flex-col items-end mr-4 gap-2">

@@ -27,6 +27,11 @@ export function BulkDataAddition() {
                     ].filter(Boolean)
                 }));
                 setCatalogs(formattedData);
+
+                // Clear localStorage if no catalogs are available
+                if (formattedData.length === 0) {
+                    localStorage.removeItem('bulkUploadResponse');
+                }
             }
             setLoading(false);
         } catch (error) {
@@ -34,6 +39,7 @@ export function BulkDataAddition() {
             setLoading(false);
         }
     }, []);
+
 
     const handleSubmit = async (catalogData) => {
         if (window.confirm('Are you sure you want to create this catalog?')) {
@@ -97,7 +103,10 @@ export function BulkDataAddition() {
                     />
                 ))
             ) : (
-                <Typography>No catalogs available</Typography>
+                <>
+                    <a href="/cata-admin">Go to your catalogs?</a>
+                    <Typography>No catalogs available</Typography>
+                </>
             )}
         </div>
     );

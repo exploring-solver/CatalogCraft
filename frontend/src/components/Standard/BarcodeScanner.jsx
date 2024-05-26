@@ -23,7 +23,7 @@ export const BarcodeScanner = () => {
                     console.log('Lookup response:', response.data);
                     setResult(' ');
                     setSearchedCatalog(response.data)
-                    navigate('/lateral')
+                    navigate()
                     // Assuming you want to do something with the response data
                 } catch (error) {
                     if (error.response && error.response.status === 400) {
@@ -51,7 +51,7 @@ export const BarcodeScanner = () => {
     return (
         <>
             {!result && <video ref={ref} />}
-            <Input placeholder="UPC Number" label="UPC Number" type="text" value={result} readOnly className="product-search-input !text-black" />
+            <Input placeholder="EAN Number" label="EAN Number" type="text" value={result} readOnly className="product-search-input !text-black" />
             <Button variant="filled" onClick={handleSearch}>Submit</Button>
         </>
     );

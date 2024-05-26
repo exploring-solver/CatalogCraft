@@ -60,20 +60,20 @@ function Modal({ isOpen, onClose, onSubmit, catalogueData, handleInputChange, ha
                         className="border p-2"
                     />
                     <Input
-                        label="ASIN"
+                        label="CSIN"
                         type="text"
-                        name="asin"
-                        placeholder="ASIN"
-                        value={catalogueData.asin}
+                        name="csin"
+                        placeholder="CSIN"
+                        value={catalogueData.csin}
                         onChange={handleInputChange}
                         className="border p-2"
                     />
                     <Input
-                        label="UPC"
+                        label="EAN"
                         type="text"
-                        name="upc"
-                        placeholder="UPC"
-                        value={catalogueData.upc}
+                        name="ean"
+                        placeholder="EAN"
+                        value={catalogueData.ean}
                         onChange={handleInputChange}
                         className="border p-2"
                     />

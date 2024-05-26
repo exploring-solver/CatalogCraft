@@ -142,10 +142,10 @@ const ProductSearch = () => {
         {currentSection === 'search' && (
           <div className="flex gap-10 justify-center items-center mx-5 border-2 border-gray-600 p-4 rounded flex-col">
             <Input
-              label="Product name, UPC, EAN, ISBN or ASIN"
+              label="Product name, EAN, EAN, ISBN or CSIN"
               size="lg"
               type="text"
-              placeholder="Product name, UPC, EAN, ISBN or ASIN"
+              placeholder="Product name, EAN, EAN, ISBN or CSIN"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="product-search-input !text-black"

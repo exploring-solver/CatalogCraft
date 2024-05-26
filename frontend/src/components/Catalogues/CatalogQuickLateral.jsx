@@ -10,28 +10,29 @@ import {
 } from '@material-tailwind/react';
 import CataContext from '../Context/Catalogue/CataContext';
 import { useNavigate } from 'react-router-dom';
-import ProductSearch from './ProductSearch';
 import axios from 'axios';
 
 const CatalogQuickLateralForm = () => {
   const [showAdditional, setShowAdditional] = useState(false);
-  const { searchedCatalog } = useContext(CataContext);
+  // const { searchedCatalog } = useContext(CataContext);
+  const searchedCatalog = JSON.parse(localStorage.getItem('searchedCatalog')) || {};
+  console.log(searchedCatalog);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    seller_sku: '',
-    selling_prize: '',
-    quantity: '',
-    item_condition: '',
+    seller_sku: searchedCatalog.seller_sku || '',
+    selling_price: searchedCatalog.mrp || '',
+    quantity: 1 || '',
     hsn_code: '',
     add_offer: '',
-    additional_description: '',
-    product_tax_code: '',
-    sale_price_offer_details: '',
+    description: searchedCatalog.description || '',
+    brand: searchedCatalog.brand || '',
+    color: searchedCatalog.color || '',
+    size: searchedCatalog.size || '',
     product_name: searchedCatalog.product_name || '',
     mrp: searchedCatalog.mrp || '',
     gst_percentage: searchedCatalog.gst_percentage || '',
-    asin: searchedCatalog.asin || '',
-    upc: searchedCatalog.upc || '',
+    csin: searchedCatalog.csin || '',
+    ean: searchedCatalog.ean || '',
     category: searchedCatalog.category || '',
   });
   const [errorMessages, setErrorMessages] = useState({});
@@ -46,8 +47,8 @@ const CatalogQuickLateralForm = () => {
         product_name: searchedCatalog.product_name,
         mrp: searchedCatalog.mrp,
         gst_percentage: searchedCatalog.gst_percentage,
-        asin: searchedCatalog.asin,
-        upc: searchedCatalog.upc,
+        csin: searchedCatalog.csin,
+        ean: searchedCatalog.ean,
         category: searchedCatalog.category,
       }));
     }
@@ -90,20 +91,20 @@ const CatalogQuickLateralForm = () => {
       alert('Catalogue Created Successfully!!');
       navigate('/product-search')
       setFormData({
-        seller_sku: '',
-        selling_prize: '',
+        seller_sku: searchedCatalog.seller_sku || '',
+        selling_price: searchedCatalog.mrp || '',
         quantity: '',
-        item_condition: '',
         hsn_code: '',
         add_offer: '',
-        additional_description: '',
-        product_tax_code: '',
-        sale_price_offer_details: '',
+        description: searchedCatalog.description || '',
+        brand: searchedCatalog.brand || '',
+        color: searchedCatalog.color || '',
+        size: searchedCatalog.size || '',
         product_name: searchedCatalog.product_name || '',
         mrp: searchedCatalog.mrp || '',
         gst_percentage: searchedCatalog.gst_percentage || '',
-        asin: searchedCatalog.asin || '',
-        upc: searchedCatalog.upc || '',
+        csin: searchedCatalog.csin || '',
+        ean: searchedCatalog.ean || '',
         category: searchedCatalog.category || '',
       });
       setErrorMessages({});
@@ -147,17 +148,18 @@ const CatalogQuickLateralForm = () => {
           <Typography className="mb-4">₹{searchedCatalog.mrp}</Typography>
           <Typography variant="h6" className="mb-2">GST Percentage</Typography>
           <Typography className="mb-4">{searchedCatalog.gst_percentage}%</Typography>
-          <Typography variant="h6" className="mb-2">ASIN</Typography>
-          <Typography className="mb-4">{searchedCatalog.asin}</Typography>
-          <Typography variant="h6" className="mb-2">UPC</Typography>
-          <Typography className="mb-4">{searchedCatalog.upc}</Typography>
+          <Typography variant="h6" className="mb-2">CSIN</Typography>
+          <Typography className="mb-4">{searchedCatalog.csin}</Typography>
+          <Typography variant="h6" className="mb-2">EAN</Typography>
+          <Typography className="mb-4">{searchedCatalog.ean}</Typography>
           <Typography variant="h6" className="mb-2">Category</Typography>
           <Typography className="mb-4">{searchedCatalog.category}</Typography>
+          <Typography variant="h6" className="mb-2">Seller SKU</Typography>
+          <Typography label="Seller SKU" size="lg" name="seller_sku" >{formData.seller_sku}</Typography>
         </div>
-        <Input label="Seller SKU" size="lg" name="seller_sku" value={formData.seller_sku} onChange={handleChange} />
-        <Input label="Your Price" size="lg" name="selling_prize" value={formData.selling_prize} onChange={handleChange} />
+        <Input label="Your Price" size="lg" name="selling_prize" value={formData.selling_price} onChange={handleChange} />
         <Input label="Quantity" size="lg" name="quantity" value={formData.quantity} onChange={handleChange} />
-        <Input label="HSN Code" size="lg" name="hsn_code" value={formData.hsn_code} onChange={handleChange} />
+        {/* <Input label="HSN Code" size="lg" name="hsn_code" value={formData.hsn_code} onChange={handleChange} /> */}
 
         <Button variant="text" className='bg-gray-500 w-fit' onClick={handleToggleAdditional}>
           {showAdditional ? 'Hide Additional Details' : 'Show Additional Details'}
@@ -165,11 +167,9 @@ const CatalogQuickLateralForm = () => {
 
         {showAdditional && (
           <>
-            <Input label="Item Condition" size="lg" name="item_condition" value={formData.item_condition} onChange={handleChange} />
-            <Input label="Add offer" size="lg" name="add_offer" value={formData.add_offer} onChange={handleChange} />
-            <Input label="Additional Description" size="lg" name="additional_description" value={formData.additional_description} onChange={handleChange} />
-            <Input label="Product Tax Code" size="lg" name="product_tax_code" value={formData.product_tax_code} onChange={handleChange} />
-            <Input label="Sale price offer details" size="lg" name="sale_price_offer_details" value={formData.sale_price_offer_details} onChange={handleChange} />
+            <Input label="Brand" size="lg" name="brand" value={formData.brand} onChange={handleChange} />
+            <Input label="Color" size="lg" name="color" value={formData.color} onChange={handleChange} />
+            <Input label="Size" size="lg" name="size" value={formData.size} onChange={handleChange} />
           </>
         )}
       </CardBody>

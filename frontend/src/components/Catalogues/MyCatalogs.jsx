@@ -49,7 +49,7 @@ const MyCatalogs = () => {
                                     productName={catalog.product_name}
                                     price={`${catalog.selling_prize}`}
                                     description={`MRP: ${catalog.mrp}`}
-                                    upc={`${catalog.upc}`}
+                                    ean={`${catalog.ean}`}
                                 />
                             </Link>
                         ))}

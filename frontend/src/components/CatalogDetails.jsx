@@ -139,7 +139,7 @@ function Catalogue() {
               Unit: <span className="font-semibold">{catalog.unit}</span>
             </Typography>
             <Typography variant="body1" color="gray">
-              UPC: <span className="font-semibold">{catalog.upc}</span>
+              EAN: <span className="font-semibold">{catalog.ean}</span>
             </Typography>
             <Typography variant="body1" color="gray">
               Quantity: <span className="font-semibold">{catalog.quantity}</span>

@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-export function EcommerceCard({ imageUrl, productName, price, description, upc }) {
+export function EcommerceCard({ imageUrl, productName, price, description, ean }) {
   return (
     <Card className="w-96 h-80 sm:h-96 md:h-[28rem] lg:h-[32rem] xl:h-[36rem]">
       <CardHeader shadow={false} floated={false} className="h-3/5">
@@ -34,7 +34,7 @@ export function EcommerceCard({ imageUrl, productName, price, description, upc }
           {description}
         </Typography>
         {/* <Typography color="blue-gray" className="font-medium ">
-            UPC: <span className="line-through">{upc}</span>
+            EAN: <span className="line-through">{ean}</span>
           </Typography> */}
       </CardBody>
       <CardFooter className="pt-0">

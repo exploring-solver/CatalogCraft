@@ -37,7 +37,7 @@ export function TemplateCatalog() {
     fetchCatalogs();
   }, [selectedTemplate, backend_url]);
 
-  const handleSubmit = async (catalogData) => {
+  const handleSubmit = async (catalogData,catalog) => {
     if (window.confirm('Are you sure you want to create this catalog?')) {
       try {
         const accessToken = localStorage.getItem('accessToken');
@@ -62,7 +62,7 @@ export function TemplateCatalog() {
 
         console.log(response.data);
         alert('Catalogue Created Successfully!!');
-        setCatalogs(prevCatalogs => prevCatalogs.filter(item => item.id !== catalogData.id));
+        setCatalogs(prevCatalogs => prevCatalogs.filter(item => item.id !== catalog.id));
       } catch (error) {
         console.error('Catalogue creation error:', error);
         if (error.response && error.response.data) {
