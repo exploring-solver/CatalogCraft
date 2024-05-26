@@ -23,7 +23,18 @@ document.getElementById('uploadButton').addEventListener('click', async () => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-            document.getElementById('result').innerText = JSON.stringify(response.data, null, 2);
+
+            const data = response.data;
+            if (data.predictions && data.predictions.length > 0) {
+                const prediction = data.predictions[0];
+                document.getElementById('productName').value = prediction.class;
+                document.getElementById('mrp').value = "100"; // Example MRP, you can set as needed
+                const productImage = document.getElementById('productImage');
+                productImage.src = reader.result;
+                productImage.style.display = 'block';
+            }
+
+            // document.getElementById('result').innerText = JSON.stringify(data, null, 2);
         } catch (error) {
             console.error(error);
             alert('An error occurred while processing the image.');
