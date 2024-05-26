@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Input, Select, Option } from '@material-tailwind/react';
+import { Button, Input, Select, Option, Spinner } from '@material-tailwind/react';
+import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import Modal from './Modal';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -32,6 +33,7 @@ function CatalogueAdmin() {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [catalogueToDelete, setCatalogueToDelete] = useState(null);
 
+    const itemsPerPage = 5;
     const token = localStorage.getItem('accessToken');
 
     useEffect(() => {
@@ -51,6 +53,9 @@ function CatalogueAdmin() {
             setCatalogues(allCatalogues);
         } catch (error) {
             console.error('Error fetching catalogues', error);
+            setCatalogues([]);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -155,7 +160,7 @@ function CatalogueAdmin() {
             setLoadingDelete(false);
             setShowConfirmation(false);
         }
-    };    
+    };
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -208,14 +213,9 @@ function CatalogueAdmin() {
                                     className="border p-2 border-black rounded-xl"
                                 />
                             </div>
-                            <a href="">
-
-                            </a>
-                            <Button
-                            >
+                            <Button onClick={() => setModalOpen(true)}>
                                 Add Catalogue
                             </Button>
-
                         </div>
                         <Select
                             value={sortCriteria}
@@ -237,42 +237,47 @@ function CatalogueAdmin() {
                         categories={categories}
                     />
 
-                    <div>
-                        <h2 className="text-2xl my-4">Catalogue List:</h2>
+                    <div className=''>
+                        <h2 className="text-2xl my-4 ml-12">Catalogue List:</h2>
                         <table className="min-w-full bg-white border border-gray-200">
                             <thead>
-                                <tr>
+                                <tr className=''>
                                     <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('name')}>
-                                Name {sortCriteria === 'name' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
-                            </th>
+                                        Name {sortCriteria === 'name' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                                    </th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('price')}>
-                                MRP {sortCriteria === 'price' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
-                            </th>
+                                        MRP {sortCriteria === 'price' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                                    </th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">GST Percentage</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">CSIN</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">EAN</th>
+                                    <th className="py-2 text-start px-4 border-b border-gray-200">Standardized</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">Category</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedCatalogues.map((catalogue, index) => (
-                                    <tr key={catalogue.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} border-t border-gray-200`}>
-                                        <td className="py-2 px-4">{catalogue.product_name}</td>
-                                        <td className="py-2 px-4">{catalogue.mrp}</td>
-                                        <td className="py-2 px-4">{catalogue.gst_percentage}</td>
-                                        <td className="py-2 px-4">{catalogue.csin}</td>
-                                        <td className="py-2 px-4">{catalogue.ean}</td>
-                                        <td className="py-2 px-4">{catalogue.category}</td>
-                                        <td className="py-2 px-4 flex gap-2 flex-wrap">
+                                {paginatedCatalogues.map((catalogue) => (
+                                    <tr key={catalogue.id} className='hover:bg-gray-200'>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.product_name}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.mrp}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.gst_percentage}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.csin}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.ean}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.standardized ? 'Yes' : 'No'}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.category}</td>
+                                        <td className="py-2 text-start px-4 border-b border-gray-200">
                                             <Button
-                                                color='amber'
+                                                size="sm"
+                                                color="green"
+                                                className="mr-2"
                                                 onClick={() => handleEdit(catalogue)}
                                             >
                                                 Edit
                                             </Button>
                                             <Button
-                                                color='red'
+                                                size="sm"
+                                                color="red"
                                                 onClick={() => handleDelete(catalogue.id)}
                                             >
                                                 Delete
@@ -282,53 +287,35 @@ function CatalogueAdmin() {
                                 ))}
                             </tbody>
                         </table>
-                        <div className="flex justify-between mt-4">
-                    <Button
-                        color='blue-gray'
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        Previous
-                    </Button>
-                    <span className='border-2 border-black rounded-full p-2 font-semibold'>Page {currentPage}</span>
-                    <Button
-                        color='blue-gray'
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        disabled={currentPage * itemsPerPage >= sortedCatalogues.length}
-                    >
-                        Next
-                    </Button>
-                </div>
-            </div>
-                    {showConfirmation && (
-                        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-                            <div className="bg-white p-4 rounded shadow-md">
-                                <p>Are you sure you want to delete this catalogue?</p>
-                                <div className="flex justify-end mt-4 gap-5">
-                                    <Button
-                                        color="red"
-                                        onClick={() => {
-                                            setShowConfirmation(false);
-                                            setCatalogueToDelete(null);
-                                        }}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        color="green"
-                                        onClick={confirmDelete}
-                                        disabled={loadingDelete}
-                                    >
-                                        {loadingDelete ? <Spinner color="white" size="sm" /> : 'Delete'}
-                                    </Button>
-                                </div>
-                            </div>
+                        <div className="flex justify-center mt-4 gap-3">
+                            {Array.from({ length: Math.ceil(sortedCatalogues.length / itemsPerPage) }).map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                    className={`px-4 py-2 border ${currentPage === index + 1 ? 'bg-gray-200' : 'bg-white'}`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
                         </div>
-                    )}
+                    </div>
                 </>
             )}
+            {showConfirmation && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-md">
+                        <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
+                        <p>Are you sure you want to delete this catalogue?</p>
+                        <div className="flex justify-end mt-4">
+                            <Button color="red" className="mr-2" onClick={confirmDelete} disabled={loadingDelete}>
+                                {loadingDelete ? 'Deleting...' : 'Delete'}
+                            </Button>
+                            <Button onClick={() => setShowConfirmation(false)}>Cancel</Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-
     );
 }
 
