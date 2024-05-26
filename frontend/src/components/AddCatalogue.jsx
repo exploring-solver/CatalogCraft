@@ -17,9 +17,9 @@ function AddCatalogue() {
     mrp: '',
     selling_price: '',
     csin: '',
-    hsn_code: '',
+    // hsn_code: '',
     gst_percentage: '',
-    unit: '',
+    // unit: '',
     quantity: '',
     category: '',
     ean: '',
@@ -84,7 +84,7 @@ function AddCatalogue() {
   const backend_url = import.meta.env.VITE_BACKEND_URL;
   const BASE_URL = 'http://panel.mait.ac.in:3012';
   const sendSpeechToServer = (words) => {
-    const prompt = "I am giving you these details of a form arrange the data in an array and separate them by a comma and if I tell in hindi then also just convert them in english and arrange the data in an array and separate them by a comma, " + words.join(', ');
+    const prompt = "I am giving you these details of a form arrange the data in an array and separate them by a comma, " + words.join(', ');
     fetch(`${BASE_URL}/generate`, {
       method: 'POST',
       headers: {
@@ -144,9 +144,9 @@ function AddCatalogue() {
         mrp: '',
         selling_price: '',
         csin: '',
-        hsn_code: '',
+        // hsn_code: '',
         gst_percentage: '',
-        unit: '',
+        // unit: '',
         quantity: '',
         standardized: '',
         category: '',

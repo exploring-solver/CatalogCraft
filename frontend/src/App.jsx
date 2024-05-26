@@ -23,6 +23,8 @@ import BulkData from './components/Catalogues/BulkData';
 import CatalogueAdmin from './components/CatalogueAdmin';
 import { BulkDataAddition } from './components/Catalogues/BulkDataAddition';
 import CatalogQuickLateralForm from './components/Catalogues/CatalogQuickLateral';
+import AddProductForm from './components/Catalogues/VoiceAddCatalog';
+import VoiceForm from './components/Catalogues/VoiceAddCatalog';
 
 function App() {
   return (
@@ -42,7 +44,7 @@ function App() {
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/lateral" element={<CatalogueLateralForm />} />
         <Route path="/instant-lateral" element={<CatalogQuickLateralForm />} />
-        <Route path="/add-catalog" element={<AddCatalogue />} />
+        <Route path="/add-catalog" element={<VoiceForm />} />
         <Route path="/bulk-data" element={<BulkData />} />
         <Route path="/bulk-data-show" element={<BulkDataAddition />} />
         <Route path="/login" element={<Login />} />
