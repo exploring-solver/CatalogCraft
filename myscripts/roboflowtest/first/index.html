@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Upload and Object Detection</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Upload an Image for Object Detection</h1>
-        <input type="file" id="imageInput" accept="image/*">
-        <button id="uploadButton">Upload and Detect</button>
-        <div id="result"></div>
-        <form id="productForm">
-            <h2>Detected Product Details</h2>
-            <div>
-                <label for="productName">Product Name:</label>
-                <input type="text" id="productName" name="productName" readonly>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-2xl font-bold mb-4">Upload an Image for Object Detection</h1>
+        <input type="file" id="imageInput" accept="image/*" class="mb-4 p-2 border border-gray-300 rounded">
+        <button id="uploadButton" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Upload and Detect</button>
+        <div id="result" class="mt-4 text-sm text-gray-600"></div>
+        <form id="productForm" class="mt-6">
+            <h2 class="text-xl font-semibold mb-4">Detected Product Details</h2>
+            <div class="mb-4">
+                <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name:</label>
+                <input type="text" id="productName" name="productName" readonly class="w-full p-2 border border-gray-300 rounded">
             </div>
-            <div>
-                <label for="mrp">MRP:</label>
-                <input type="text" id="mrp" name="mrp">
+            <div class="mb-4">
+                <label for="mrp" class="block text-gray-700 font-bold mb-2">MRP:</label>
+                <input type="text" id="mrp" name="mrp" class="w-full p-2 border border-gray-300 rounded">
             </div>
-            <div>
-                <label for="productImage">Product Image:</label>
-                <img id="productImage" src="" alt="Product Image" style="display:none;">
+            <div class="mb-4">
+                <label for="productImage" class="block text-gray-700 font-bold mb-2">Product Image:</label>
+                <img id="productImage" src="" alt="Product Image" class="w-full rounded" style="display:none;">
             </div>
             <!-- Add more fields as needed -->
         </form>
