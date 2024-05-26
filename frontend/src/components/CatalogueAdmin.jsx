@@ -1,7 +1,6 @@
-// CatalogueAdmin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Input, Select, Option, Spinner } from '@material-tailwind/react';
+import { Button, Input, Select, Option } from '@material-tailwind/react';
 import Modal from './Modal';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -27,6 +26,8 @@ function CatalogueAdmin() {
     });
     const [modalOpen, setModalOpen] = useState(false);
     const [sortCriteria, setSortCriteria] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
+    const [currentPage, setCurrentPage] = useState(1);
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [catalogueToDelete, setCatalogueToDelete] = useState(null);
@@ -41,16 +42,15 @@ function CatalogueAdmin() {
     const fetchCatalogues = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_URL}/catalogue/get/`, {
+            const response = await axios.get(`${API_URL}/catalogue/get-all/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setCatalogues(response.data);
+            const allCatalogues = Object.values(response.data).flat();
+            setCatalogues(allCatalogues);
         } catch (error) {
             console.error('Error fetching catalogues', error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -80,10 +80,12 @@ function CatalogueAdmin() {
         setCatalogueData({ ...catalogueData, [name]: checked });
     };
 
-    const handleSortChange = (e) => {
-        setSortCriteria(e.target.value);
+    const handleSortChange = (criteria) => {
+        const order = sortCriteria === criteria && sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortCriteria(criteria);
+        setSortOrder(order);
     };
-    //TODO : edit this form and handle submit to update seller catalogue details
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -153,30 +155,42 @@ function CatalogueAdmin() {
             setLoadingDelete(false);
             setShowConfirmation(false);
         }
-    };
+    };    
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const filteredCatalogues = catalogues.filter((catalogue) =>
-        catalogue.product_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const getFilteredCatalogues = () => {
+        return catalogues.filter((catalogue) =>
+            catalogue.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    };
 
-    const sortedCatalogues = sortCriteria
-        ? filteredCatalogues.sort((a, b) => {
-            if (sortCriteria === 'price') {
-                return a.mrp - b.mrp;
-            } else if (sortCriteria === 'category') {
-                return a.category.localeCompare(b.category);
-            } else {
-                return 0;
-            }
-        })
-        : filteredCatalogues;
+    const getSortedCatalogues = (catalogueList) => {
+        return sortCriteria
+            ? catalogueList.sort((a, b) => {
+                if (sortCriteria === 'price') {
+                    return sortOrder === 'asc' ? parseFloat(a.mrp) - parseFloat(b.mrp) : parseFloat(b.mrp) - parseFloat(a.mrp);
+                } else if (sortCriteria === 'name') {
+                    return sortOrder === 'asc' ? a.product_name.localeCompare(b.product_name) : b.product_name.localeCompare(a.product_name);
+                } else {
+                    return 0;
+                }
+            })
+            : catalogueList;
+    };
+
+    const getPaginatedCatalogues = (catalogueList) => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return catalogueList.slice(startIndex, startIndex + itemsPerPage);
+    };
+
+    const sortedCatalogues = getSortedCatalogues(getFilteredCatalogues());
+    const paginatedCatalogues = getPaginatedCatalogues(sortedCatalogues);
 
     return (
-        <div className="p-4 ">
+        <div className="p-4">
             <h1 className="text-4xl font-bold my-4 text-center">Catalogue Admin</h1>
             {loading && <Spinner color="blue" size="large" className="mx-auto" />}
             {!loading && (
@@ -223,13 +237,17 @@ function CatalogueAdmin() {
                         categories={categories}
                     />
 
-                    <div className=''>
-                        <h2 className="text-2xl my-4 ml-12">Catalogue List:</h2>
+                    <div>
+                        <h2 className="text-2xl my-4">Catalogue List:</h2>
                         <table className="min-w-full bg-white border border-gray-200">
                             <thead>
-                                <tr className=''>
-                                    <th className="py-2 text-start px-4 border-b border-gray-200">Name</th>
-                                    <th className="py-2 text-start px-4 border-b border-gray-200">MRP</th>
+                                <tr>
+                                    <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('name')}>
+                                Name {sortCriteria === 'name' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                            </th>
+                                    <th className="py-2 text-start px-4 border-b border-gray-200 cursor-pointer" onClick={() => handleSortChange('price')}>
+                                MRP {sortCriteria === 'price' && (sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />)}
+                            </th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">GST Percentage</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">CSIN</th>
                                     <th className="py-2 text-start px-4 border-b border-gray-200">EAN</th>
@@ -238,7 +256,7 @@ function CatalogueAdmin() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sortedCatalogues.map((catalogue, index) => (
+                                {paginatedCatalogues.map((catalogue, index) => (
                                     <tr key={catalogue.id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} border-t border-gray-200`}>
                                         <td className="py-2 px-4">{catalogue.product_name}</td>
                                         <td className="py-2 px-4">{catalogue.mrp}</td>
@@ -264,7 +282,24 @@ function CatalogueAdmin() {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
+                        <div className="flex justify-between mt-4">
+                    <Button
+                        color='blue-gray'
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </Button>
+                    <span className='border-2 border-black rounded-full p-2 font-semibold'>Page {currentPage}</span>
+                    <Button
+                        color='blue-gray'
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage * itemsPerPage >= sortedCatalogues.length}
+                    >
+                        Next
+                    </Button>
+                </div>
+            </div>
                     {showConfirmation && (
                         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
                             <div className="bg-white p-4 rounded shadow-md">
