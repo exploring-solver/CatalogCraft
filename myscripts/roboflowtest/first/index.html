@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload and Object Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image for Object Detection</h1>
+        <input type="file" id="imageInput" accept="image/*">
+        <button id="uploadButton">Upload and Detect</button>
+        <div id="result"></div>
+        <form id="productForm">
+            <h2>Detected Product Details</h2>
+            <div>
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="productName" readonly>
+            </div>
+            <div>
+                <label for="mrp">MRP:</label>
+                <input type="text" id="mrp" name="mrp">
+            </div>
+            <div>
+                <label for="productImage">Product Image:</label>
+                <img id="productImage" src="" alt="Product Image" style="display:none;">
+            </div>
+            <!-- Add more fields as needed -->
+        </form>
+    </div>
+    <script src="test.js"></script>
+</body>
+</html>

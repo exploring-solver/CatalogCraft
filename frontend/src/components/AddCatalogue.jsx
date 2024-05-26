@@ -217,22 +217,18 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.product_name}</p>}
           </div>
-          <div className="form-group w-96">
-            {/* <label htmlFor="mrp" className="block text-gray-700 text-sm font-bold mb-2">MRP</label> */}
-            <Textarea
-              label='Description'
+          <div className="form-group">
+            <Input
+              label='Seller SKU'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="description"
-              name="description"
-              value={formData.description}
+              id="seller_sku"
+              name="seller_sku"
+              value={formData.seller_sku}
               onChange={handleChange}
             />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.description}</p>}
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.seller_sku}</p>}
           </div>
-        </div>
-        <div className='flex flex-wrap gap-5 md:w-[70%]'>
-
           <div className="form-group">
             {/* <label htmlFor="mrp" className="block text-gray-700 text-sm font-bold mb-2">MRP</label> */}
             <Input
@@ -247,7 +243,7 @@ function AddCatalogue() {
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.mrp}</p>}
           </div>
           <div className="form-group">
-            {/* <label htmlFor="selling_price" className="block text-gray-700 text-sm font-bold mb-2">Selling Price</label> */}
+            {/* <label htmlFor="selling_prize" className="block text-gray-700 text-sm font-bold mb-2">Selling Price</label> */}
             <Input
               label='Selling Price'
               type="text"
@@ -260,8 +256,21 @@ function AddCatalogue() {
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.selling_price}</p>}
           </div>
           {/* <div className="form-group"> */}
-          {/* <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> */}
+          {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
           {/* <Input
+              label='Buying Price'
+              type="text"
+              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="buying_prize"
+              name="buying_prize"
+              value={formData.buying_prize}
+              onChange={handleChange}
+            />
+            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.buying_prize}</p>}
+          </div> */}
+          {/* <div className="form-group">
+            <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> 
+            <Input
               label='HSN Code'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -285,48 +294,9 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.gst_percentage}</p>}
           </div>
-          <div className="form-group">
-            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
+          {/* <div className="form-group">
+            <label htmlFor="unit" className="block text-gray-700 text-sm font-bold mb-2">Unit</label>
             <Input
-              label='CSIN'
-              type="text"
-              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="csin"
-              name="csin"
-              value={formData.csin}
-              onChange={handleChange}
-            />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.csin}</p>}
-          </div>
-          <div className="form-group">
-            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
-            <Input
-              label='EAN'
-              type="text"
-              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="ean"
-              name="ean"
-              value={formData.ean}
-              onChange={handleChange}
-            />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.ean}</p>}
-          </div>
-          <div className="form-group">
-            {/* <label htmlFor="buying_prize" className="block text-gray-700 text-sm font-bold mb-2">Buying Price</label> */}
-            <Input
-              label='Seller SKU'
-              type="text"
-              className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="seller_sku"
-              name="seller_sku"
-              value={formData.seller_sku}
-              onChange={handleChange}
-            />
-            {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.seller_sku}</p>}
-          </div>
-          {/* <div className="form-group"> */}
-          {/* <label htmlFor="unit" className="block text-gray-700 text-sm font-bold mb-2">Unit</label> */}
-          {/* <Input
               label='Unit'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

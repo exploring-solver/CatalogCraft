@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { CatalogCard } from '../Utils/CatalogCard';
 import { Typography } from '@material-tailwind/react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import CatalogCard from '../Utils/CatalogCard';
 
 export function BulkDataAddition() {
     const { name: selectedTemplate } = useParams();
