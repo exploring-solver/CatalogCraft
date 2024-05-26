@@ -44,7 +44,7 @@ function CatalogueAdmin() {
     const fetchCatalogues = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_URL}/catalogue/get-all/`, {
+            const response = await axios.get(`${API_URL}/catalogue/get/`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -213,9 +213,11 @@ function CatalogueAdmin() {
                                     className="border p-2 border-black rounded-xl"
                                 />
                             </div>
-                            <Button onClick={() => setModalOpen(true)}>
+                            <a href="/product-search">
+                                <Button>
                                 Add Catalogue
                             </Button>
+                            </a>
                         </div>
                         <Select
                             value={sortCriteria}
@@ -266,7 +268,7 @@ function CatalogueAdmin() {
                                         <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.ean}</td>
                                         <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.standardized ? 'Yes' : 'No'}</td>
                                         <td className="py-2 text-start px-4 border-b border-gray-200">{catalogue.category}</td>
-                                        <td className="py-2 text-start px-4 border-b border-gray-200">
+                                        <td className="py-2 text-start px-4 border-b border-gray-200 gap-3 flex items-center" >
                                             <Button
                                                 size="sm"
                                                 color="green"

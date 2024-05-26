@@ -194,7 +194,7 @@ function AddCatalogue() {
 
   return (
     <div className="w-[90%] mx-auto mt-8">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex gap-1 flex-col">
+      <form onSubmit={handleSubmit} className="bg-gray-100 shadow-lg border-[1px] border-black rounded px-8 pt-6 pb-8 mb-4 flex gap-1 flex-col">
         <h1 className='text-2xl font-mono my-5'>Catalogue Creation</h1>
         <Button variant='filled' color='amber' className="flex items-center gap-3 max-w-56" id="voiceButton" onClick={toggleListening} >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-mic-fill" viewBox="0 0 16 16">
@@ -230,6 +230,9 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.description}</p>}
           </div>
+        </div>
+        <div className='flex flex-wrap gap-5 md:w-[70%]'>
+
           <div className="form-group">
             {/* <label htmlFor="mrp" className="block text-gray-700 text-sm font-bold mb-2">MRP</label> */}
             <Input
@@ -256,9 +259,9 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.selling_price}</p>}
           </div>
-          <div className="form-group">
-            {/* <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> */}
-            <Input
+          {/* <div className="form-group"> */}
+          {/* <label htmlFor="hsn_code" className="block text-gray-700 text-sm font-bold mb-2">HSN Code</label> */}
+          {/* <Input
               label='HSN Code'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -268,7 +271,7 @@ function AddCatalogue() {
               onChange={handleChange}
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.hsn_code}</p>}
-          </div>
+          </div> */}
           <div className="form-group">
             {/* <label htmlFor="gst_percentage" className="block text-gray-700 text-sm font-bold mb-2">GST Percentage</label> */}
             <Input
@@ -321,9 +324,9 @@ function AddCatalogue() {
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.seller_sku}</p>}
           </div>
-          <div className="form-group">
-            {/* <label htmlFor="unit" className="block text-gray-700 text-sm font-bold mb-2">Unit</label> */}
-            <Input
+          {/* <div className="form-group"> */}
+          {/* <label htmlFor="unit" className="block text-gray-700 text-sm font-bold mb-2">Unit</label> */}
+          {/* <Input
               label='Unit'
               type="text"
               className="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -333,7 +336,7 @@ function AddCatalogue() {
               onChange={handleChange}
             />
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.unit}</p>}
-          </div>
+          </div> */}
           <div className="form-group">
             {/* <label htmlFor="quantity" className="block text-gray-700 text-sm font-bold mb-2">Quantity</label> */}
             <Input
@@ -348,9 +351,11 @@ function AddCatalogue() {
             {errorMessages && <p className="text-red-500 text-xs italic">{errorMessages.quantity}</p>}
           </div>
 
+        </div>
 
+        <div className='mt-5'>
           {/*TODO: there needs to be a select option from react select to make it a select with search for the seller NP.*/}
-          <div className="form-group">
+          <div className="form-group w-[200px]">
             <label htmlFor="category" className="block text-gray-700 text-sm font-bold mb-2">
               Category
             </label>

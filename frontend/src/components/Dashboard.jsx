@@ -20,7 +20,7 @@ function Dashboard() {
                 // Assuming the API response contains user data
                 setUser(response.data);
                 // Fetch the catalogues of the logged-in user
-                return axios.get('http://panel.mait.ac.in:8012/catalogues/', {
+                return axios.get('http://panel.mait.ac.in:8012/catalogue/get/', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
                         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function Dashboard() {
     }, []);
 
     return (
-        <div className="max-w-4xl mx-auto mt-8 h-screen bg-yellow-50">
+        <div className="max-w-4xl mx-auto mt-8 bg-yellow-50">
             {loading ? (
                 <div className='flex justify-center items-center'> 
                 <Spinner className=" h-16 w-16 text-gray-900/50" />
@@ -78,7 +78,7 @@ function Dashboard() {
                         <Card>
                             <CardBody className="flex flex-col items-start justify-center">
                                 <Typography variant="h6" className="mb-2">Wanna add a new Product?</Typography>
-                                <Link to={'/add-catalog'} className='w-fit'>
+                                <Link to={'/product-search'} className='w-fit'>
                                     <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         Create Catalog
                                     </Button>
@@ -102,8 +102,13 @@ function Dashboard() {
                             </CardHeader>
                             <CardBody>
                                 {catalogues.slice(0, 5).map((catalogue) => (
-                                    <div key={catalogue.id} className="mb-4">
-                                        <Typography variant="h6" className="font-bold">{catalogue.name}</Typography>
+                                    <div key={catalogue.id} className="mb-4 border-[1px] rounded border-black shadow p-5">
+                                        <img 
+                                            src={`http://panel.mait.ac.in:8012${catalogue.product_image_1}`} 
+                                            alt={`${catalogue.name} image`} 
+                                            className="w-32 object-cover mb-2 rounded"
+                                        />
+                                        <Typography variant="h6" className="font-bold">{catalogue.product_name}</Typography>
                                         <Typography variant="body2" className="text-gray-600">{catalogue.description}</Typography>
                                     </div>
                                 ))}

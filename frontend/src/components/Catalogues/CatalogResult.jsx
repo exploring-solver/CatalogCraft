@@ -20,8 +20,7 @@ const ProductListItem = ({ catalog }) => {
   };
 
   const handleCreateCatalog = () => {
-    setSearchedCatalog(catalog);
-    navigate("/lateral")
+    setSearchedCatalog(catalog); localStorage.setItem('searchedCatalog', JSON.stringify(catalog)); navigate("/lateral")
   };
 
   const handleInstantCreateCatalog = () => {
