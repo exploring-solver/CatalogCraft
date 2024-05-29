@@ -9,7 +9,7 @@ axios({
     method: "POST",
     url: "https://detect.roboflow.com/groceries-6pfog/6",
     params: {
-        api_key: "0RiNrObWAFHLjETT0Gup"
+        api_key: ""
     },
     data: image,
     headers: {
