@@ -10,11 +10,11 @@ const BasicFAQ = () => {
         <h3 className="mb-4 text-center text-3xl font-semibold">
           FAQ Section
         </h3>
-        <Question title="faq 1" defaultOpen>
+        {/* <Question title="faq 1" defaultOpen>
           <p>
             kuch likhdo
           </p>
-        </Question>
+        </Question> */}
         <Question title="how to get started?">
           <p>
             To get started, follow these steps:

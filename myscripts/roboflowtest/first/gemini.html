@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Analysis with Google Generative AI</title>
+</head>
+<body>
+  <h1>Upload an Image</h1>
+  <input type="file" id="imageUpload" multiple>
+  <button id="submitButton">Submit</button>
+  
+  <h2>Results</h2>
+  <form id="resultForm">
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" name="productName"><br>
+    <label for="productDescription">Product Description:</label>
+    <input type="text" id="productDescription" name="productDescription"><br>
+  </form>
+  
+  <script src="gemini.js"></script>
+</body>
+</html>

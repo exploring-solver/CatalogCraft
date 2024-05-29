@@ -201,6 +201,7 @@ const ProductSearch = () => {
           <Link className='text-blue-800 text-lg underline' to="/bulk-data" >
             I am uploading a file to add multiple products
           </Link>
+          {/* <a className='text-blue-800 text-lg underline' href="http://127.0.0.1:5500/myscripts/roboflowtest/first/index.html"></a> */}
         </div>
         <CatalogLists />
         <br /><br />
