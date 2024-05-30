@@ -27,7 +27,7 @@ Follow these steps to set up the development environment:
 
    ```bash
    git clone https://github.com/exploring-solver/CatalogCraft.git
-   cd CatalogCraft
+   cd frontend
    ```
 
 2. **Install Dependencies:**
@@ -93,3 +93,4 @@ The challenge is to develop innovative solutions that leverage cutting-edge tech
 4. Shivam Kumar Jha
 
 ## Thank You!
+## Please star the repository :)
