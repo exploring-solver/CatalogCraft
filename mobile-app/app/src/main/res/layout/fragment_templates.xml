@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.TemplatesFragment"
+    android:background="@color/my_white1">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/do_you_want_to_search_for_pre_existing_catalogs"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="40dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/yes_btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:text="@string/yes"
+                android:textColor="@color/my_white1"
+                android:textSize="16sp"/>
+            <Button
+                android:id="@+id/no_btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:text="@string/no"
+                android:textColor="@color/my_white1"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

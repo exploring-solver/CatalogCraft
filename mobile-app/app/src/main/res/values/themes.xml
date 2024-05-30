@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.CatalogCraft" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/middle_orange</item>
+         <item name="colorOnPrimary">@color/middle_orange</item>
+         <item name="colorPrimaryDark">@color/middle_orange</item>
+         <item name="colorPrimaryVariant">@color/middle_orange</item>
+         <item name="colorSurface">@color/middle_orange</item>
+         <item name="colorOnSurface">@color/middle_orange</item>
+         <item name="android:statusBarColor">@color/middle_orange</item>
+    </style>
+
+    <style name="Theme.CatalogCraft" parent="Base.Theme.CatalogCraft" />
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CameraActivity">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/camera_pv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
+
+        <ImageButton
+            android:id="@+id/capture_ib"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="35dp"
+            android:layout_centerHorizontal="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/circle"
+            android:scaleType="centerCrop"
+            app:tint="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/flash_ib"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/flash_off_icon"
+            android:scaleType="centerCrop"
+            app:tint="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/flip_ib"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/flash_ib"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/camera_flip_icon"
+            android:scaleType="centerCrop"
+            app:tint="@color/white"/>
+
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/loading_screen"
+        layout="@layout/loading_screen"
+        android:visibility="gone" />
+</FrameLayout>

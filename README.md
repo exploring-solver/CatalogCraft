@@ -48,21 +48,9 @@ Consider a sample catalog with at least 1000 SKUs, with attributes such as SKU i
 This catalog is to be digitized using a combination of intuitive interfaces such as text / voice / image input, with text & voice input using any of the Indic languages.
 In some cases, a combination of these interfaces are required to digitize an SKU e.g. scan image which pre-fills the product name from the repository, with the remaining attributes filled using text or voice input.
 
-## Solution
-
-1. 
-
-## USP
-
-1. 
-
-## Business
-
-1. 
-
 ## Technology
 
-1. 
+ReactJs, Material Tailwind UI, Django, PostgreSQL, NodeJs, MongoDb, Kotlin
 
 ## Team
 
