@@ -1,0 +1,45 @@
+{
+  "name": "nodejs-express-template",
+  "version": "1.0.0",
+  "description": "Scalable and basic template for making Node.js apps by using express",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier-eslint \"$PWD/{,!(node_modules)/**/}*.{js,json}\"",
+    "format:fix": "prettier-eslint --write \"$PWD/{,!(node_modules)/**/}*.{js,json}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adminjs/express": "^6.1.0",
+    "@adminjs/mongoose": "^4.1.0",
+    "@hapi/joi": "^17.1.1",
+    "adminjs": "^7.8.1",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-ip": "^1.0.4",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^8.4.0",
+    "xlsx": "^0.18.5"
+  }
+}
