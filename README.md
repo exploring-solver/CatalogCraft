@@ -87,10 +87,10 @@ The challenge is to develop innovative solutions that leverage cutting-edge tech
 
 ## Team
 
-1. Aman Sharma
-2. Ravi K Banchhiwal
-3. Ishaan Minocha
-4. Shivam Kumar Jha
+1. [Aman Sharma](https://github.com/exploring-solver)
+2. [Ravi K Banchhiwal](https://github.com/ivar03/)
+3. [Ishaan Minocha](https://github.com/IshaanMinocha)
+4. [Shivam Kumar Jha](https://github.com/Shivoo29)
 
 ## Thank You!
 ## Please star the repository :)
